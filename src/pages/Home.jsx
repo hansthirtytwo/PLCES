@@ -54,6 +54,7 @@ export default function Home() {
                     variant="fullWidth"
                   >
                     <Tab label="Intramurals 2024-2025" value="1" />
+                    <Tab label="What is PLCES?" value="2" />
                   </TabList>
                 </Box>
                 <TabPanel value="1" sx={{ padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
@@ -84,6 +85,17 @@ export default function Home() {
 
                   </MenuList>
                 </TabPanel>
+                
+              <TabPanel value="1" sx={{ padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
+                  <Paper>
+                    <h1>PLCES</h1>
+                    <p>Probably Live CAM Event Scores or PLCES for short is a website made by Hans to track event scores and to record them.</p>
+
+
+                  </Paper>
+                </TabPanel>
+                
+                
               </TabContext>
             </Box>
           </Paper>
