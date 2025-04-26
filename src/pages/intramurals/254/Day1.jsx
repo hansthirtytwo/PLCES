@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import Chip from '@mui/material/Chip';
 import Alert from '@mui/material/Alert';
+import FastfoodRoundedIcon from '@mui/icons-material/FastfoodRounded';
 import Card from '@mui/material/Card';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -75,7 +76,7 @@ export default function Day1() {
               </Stack>
               <Divider sx={{ mt: 2, mb: 2 }} />
 
-              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Stack direction="row" flexWrap="wrap" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="body">Committees Involved</Typography>
                 <Stack direction="row" spacing={1}>
                     <Chip color="info" size="small" label="Sir Oliver" />
@@ -107,7 +108,7 @@ export default function Day1() {
               <Divider sx={{ mt: 2, mb: 2 }} />
 
 
-              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Stack direction="row" flexWrap="wrap" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="body">Committees Involved</Typography>
                 <Stack direction="row" spacing={1}>
                     <Chip color="info" size="small" label="Sir Josh" />
@@ -142,6 +143,89 @@ export default function Day1() {
                   <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography variant="body">Red Eagles</Typography>
                     <b>+300</b>
+                  </Stack>
+
+
+                </CardContent>
+
+
+              </Card>
+
+            </Stack>
+          )}
+
+
+          {selectedModal === 'opencem' && (
+            <Stack spacing='10px'>
+              <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                <Stack direction='row' sx={{ alignItems: 'center' }}>
+                    <IconButton onClick={handleClose} sx={{mr: '10px'}} >
+                        <ArrowBackIosNewRoundedIcon />
+                    </IconButton>
+                    <Typography variant="h5">Opening Parade</Typography>
+                </Stack>
+                <Typography variant="h6">10:00 - 11:00 AM</Typography>
+              </Stack>
+              <Divider sx={{ mt: 2, mb: 2 }} />
+
+
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body">Venue</Typography>
+                <b>Court</b>
+              </Stack>
+
+
+
+              <Card variant='outlined'>
+                <CardContent>
+
+                  <Stack spacing='5px'>
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">National Anthem</Typography>
+                      <Typography variant='body'><Chip color="info" size="small" label="Ms. Zoe" /></Typography>
+                    </Stack>
+                    <Divider/>
+
+
+
+
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">Praise and Worship</Typography>
+                      <Typography variant='body'><Chip color="warning" size="small" label="CAMusika" /></Typography>
+                    </Stack>
+                    <Divider/>
+
+
+
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">G4 Tradition Dance Presentation</Typography>
+                      <Typography variant='body'><Chip color="warning" variant='outlined' size="small" label="Grade 4" /></Typography>
+                    </Stack>
+                    <Divider/>
+
+
+
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">Opening Remarks</Typography>
+                      <Typography variant='body'><Chip color="info" size="small" label="Sir Josh" /></Typography>
+                    </Stack>
+                    <Divider/>
+
+
+
+
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">Lighting of Torch</Typography>
+                      <Typography variant='body'><Chip color="warning" size="small" label="House Leaders" /></Typography>
+                    </Stack>
+                    <Divider/>
+
+
+
+                    <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Typography variant="body">Oath of Sportsmanship</Typography>
+                      <Typography variant='body'><Chip color="error" size="small" label="Red Eagles" variant='outlined' /></Typography>
+                    </Stack>
                   </Stack>
 
 
@@ -212,6 +296,37 @@ export default function Day1() {
                           <Typography variant="body1">Float Parade</Typography>
                           <Typography color="gray" variant="body2">
                             8:00–9:30 AM
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+
+
+
+                    <MenuItem>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip color="default" label='BR' />
+                        <Stack>
+                          <Typography variant="body1">Break</Typography>
+                          <Typography color="gray" variant="body2">
+                            9:30–10:00 AM
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+
+
+
+
+                    <MenuItem onClick={handleOpen('opencem')}>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip sx={{ mr: { xs: 1, sm: 2 } }} color="success" label="GG" />
+                        <Stack>
+                          <Typography variant="body1">Opening Ceremony</Typography>
+                          <Typography color="gray" variant="body2">
+                            10:00–11:00 AM
                           </Typography>
                         </Stack>
                       </Stack>
