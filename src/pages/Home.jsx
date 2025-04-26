@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { createTheme, Stack, ThemeProvider } from '@mui/material';
+import { createTheme, Stack, ThemeProvider, Stepper, Step, StepLabel, StepContent, StepIcon, LinearProgress, Avatar, Card, Divider } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
+import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded';
 import Paper from '@mui/material/Paper';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -53,15 +54,97 @@ export default function Home() {
                     aria-label="lab API tabs example"
                     variant="fullWidth"
                   >
-                    <Tab label="Intramurals 2024-2025" value="1" />
+                    <Tab label="CAM Intramurals 2025" value="1" />
                     <Tab label="What is PLCES?" value="2" />
                   </TabList>
                 </Box>
-                <TabPanel value="1" sx={{ padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
+                <TabPanel value="1" sx={{ padding: 0, margin: 0, maxHeight: '500px', overflow: 'scroll', overflowX: 'hidden' }}>
+
+
+                  <Stepper sx={{p: 3}} activeStep={4} alternativeLabel style={{color: "#eaeaf0"}}>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Advanced Games</Typography>
+                          <Typography variant="caption">Elimination and other preparation</Typography>
+                      </StepLabel>
+
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Day 1</Typography>
+                          <Typography variant="caption">Opening of Intramurals</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Day 2</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Day 3</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Weekends</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                    <StepLabel>
+                          <Typography>Day 4</Typography>
+                          <Typography variant="caption">Shake Shake Fries..?</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                          <Typography>Day 5</Typography>
+                      </StepLabel>
+                    </Step>
+                    <Step>
+                      <StepLabel>
+                        <Typography>Day 6 / Family Day</Typography>
+                        <Typography variant="caption">Last day, Last Chance.</Typography>
+                      </StepLabel>
+                  
+                    </Step>
+                  </Stepper>
+
+
+                  <Card variant='outlined' sx={{m: 1, p: 2}}>
+                    <Stack spacing='10px'>
+                      <Typography variant='h6'>Champions Prediction</Typography>
+                      <Divider/>
+                      <Stack spacing={1} direction='row' sx={{alignItems: 'center'}}>
+                        <MilitaryTechRoundedIcon color='warning' fontSize='large'/>
+                        <Stack>
+                          <Typography fontWeight={'bold'} variant='h5'>Red Eagles</Typography>
+                          <Typography>1000 pts</Typography>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  </Card>
+
                   <MenuList>
+                    <MenuItem component={Link} to="/intramurals/25/day2">
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip
+                          sx={{ marginRight: { xs: 1, sm: 2 } }}
+                          color="success"
+                          label="GG"
+                        />
+                        <Stack>
+                          <Typography variant="body1">Day 2</Typography>
+                          <Typography color="gray" variant="body2">
+                            Apr 24, 2025
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
 
 
-                    <MenuItem component={Link} to="/intramurals/254/">
+
+                    <MenuItem component={Link} to="/intramurals/25/day1">
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
@@ -79,20 +162,17 @@ export default function Home() {
 
 
 
-                    
-
-
 
                   </MenuList>
                 </TabPanel>
                 
-              <TabPanel value="2" sx={{ padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
+              <TabPanel value="2" sx={{ textAlign: 'center', padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
                  
-                    <h1>PLCES</h1>
-                    <p>Probably Live CAM Event Scores or PLCES for short is a website made by Hans to track event scores and to record them.</p>
+                  <Typography sx={{mt: '20px', fontWeight: 'bold'}} variant='h4'>PLCES</Typography>
+                  <Typography sx={{mb: '20px'}}>Probably Live CAM Event Scores or PLCES for short is a website made by Hans to track event scores and to record them.</Typography>
 
 
-                </TabPanel>
+              </TabPanel>
                 
                 
               </TabContext>
