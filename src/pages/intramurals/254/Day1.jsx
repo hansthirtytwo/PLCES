@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createTheme, Divider, Stack, ThemeProvider, IconButton } from '@mui/material';
+import { createTheme, Divider, Stack, ThemeProvider, IconButton, ListItemText, List, ListItem, ListItemButton, CardContent } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -13,6 +13,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import Chip from '@mui/material/Chip';
+import Alert from '@mui/material/Alert';
 import Card from '@mui/material/Card';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -93,7 +94,7 @@ export default function Day1() {
           
 
           {selectedModal === 'float' && (
-            <>
+            <Stack spacing='10px'>
               <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
                 <Stack direction='row' sx={{ alignItems: 'center' }}>
                     <IconButton onClick={handleClose} sx={{mr: '10px'}} >
@@ -123,7 +124,33 @@ export default function Day1() {
                 <b>Out of CAM</b>
               </Stack>
 
-            </>
+        
+              <Alert severity="info">Placements are not available.</Alert>
+
+              <Card variant='outlined'>
+                <CardContent>
+
+                  <Typography variant="h6">Merits</Typography>
+
+
+                  <Divider/>
+                  <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body">Green Rams</Typography>
+                    <b>+300</b>
+                  </Stack>
+
+                  <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body">Red Eagles</Typography>
+                    <b>+300</b>
+                  </Stack>
+
+
+                </CardContent>
+
+
+              </Card>
+
+            </Stack>
           )}
 
         </Card>
