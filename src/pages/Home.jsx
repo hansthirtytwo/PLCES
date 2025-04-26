@@ -87,12 +87,11 @@ export default function Home() {
                 </TabPanel>
                 
               <TabPanel value="2" sx={{ padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
-                  <Paper>
+                 
                     <h1>PLCES</h1>
                     <p>Probably Live CAM Event Scores or PLCES for short is a website made by Hans to track event scores and to record them.</p>
 
 
-                  </Paper>
                 </TabPanel>
                 
                 
