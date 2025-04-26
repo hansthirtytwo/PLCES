@@ -68,26 +68,64 @@ export default function Day1() {
                     <IconButton onClick={handleClose} sx={{mr: '10px'}} >
                         <ArrowBackIosNewRoundedIcon />
                     </IconButton>
-                    <Typography variant="h5">General Rehearsal</Typography>
+                    <Typography variant="h5">General Assembly</Typography>
                 </Stack>
                 <Typography variant="h6">7:30 AM – 8:00 AM</Typography>
               </Stack>
               <Divider sx={{ mt: 2, mb: 2 }} />
-              <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h6">Committee/Delegate Involved</Typography>
+
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body">Committees Involved</Typography>
                 <Stack direction="row" spacing={1}>
                     <Chip color="info" size="small" label="Sir Oliver" />
                     <Chip color="info" size="small" label="Ms. Nina" />
                 </Stack>
               </Stack>
+
+
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body">Venue</Typography>
+                <b>Court</b>
+              </Stack>
+
             </>
           )}
-          {selectedModal === 'day2' && (
+          
+
+          {selectedModal === 'float' && (
             <>
-              <Typography variant="h6">Day 2 Schedule</Typography>
-              <Typography sx={{ mt: 2 }}>8:00 AM – 9:00 AM: Keynote</Typography>
+              <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                <Stack direction='row' sx={{ alignItems: 'center' }}>
+                    <IconButton onClick={handleClose} sx={{mr: '10px'}} >
+                        <ArrowBackIosNewRoundedIcon />
+                    </IconButton>
+                    <Typography variant="h5">Float Parade</Typography>
+                </Stack>
+                <Typography variant="h6">8:00 - 9:30 AM</Typography>
+              </Stack>
+              <Divider sx={{ mt: 2, mb: 2 }} />
+
+
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body">Committees Involved</Typography>
+                <Stack direction="row" spacing={1}>
+                    <Chip color="info" size="small" label="Sir Josh" />
+                    <Chip color="info" size="small" label="Sir Tristan" />
+                    <Chip color="info" size="small" label="Ms Zoe" />
+                    <Chip color="info" size="small" label="Ms Nina" />
+                </Stack>
+              </Stack>
+
+
+
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="body">Venue</Typography>
+                <b>Out of CAM</b>
+              </Stack>
+
             </>
           )}
+
         </Card>
       </Modal>
 
@@ -122,6 +160,8 @@ export default function Day1() {
                 </Box>
                 <TabPanel value="1" sx={{ p: 0, m: 0 }}>
                   <MenuList>
+
+
                     <MenuItem onClick={handleOpen('genrel')}>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip sx={{ mr: { xs: 1, sm: 2 } }} color="success" label="GG" />
@@ -134,6 +174,23 @@ export default function Day1() {
                         </Stack>
                       </Stack>
                     </MenuItem>
+
+
+
+
+                    <MenuItem onClick={handleOpen('float')}>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip sx={{ mr: { xs: 1, sm: 2 } }} color="success" label="GG" />
+                        <Stack>
+                          <Typography variant="body1">Float Parade</Typography>
+                          <Typography color="gray" variant="body2">
+                            8:00–9:30 AM
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+
                   </MenuList>
                 </TabPanel>
               </TabContext>
