@@ -121,7 +121,7 @@ export default function Day2() {
                 <b>Grade 2</b>
               </Stack>
 
-              <Alert severity='error'>The Game Info <b>aren't recorded</b>.</Alert>
+              <Alert severity='error'>The Game Info <b>isn't recorded</b>.</Alert>
 
             </>
           )}
@@ -530,7 +530,7 @@ export default function Day2() {
               </Stack>
 
 
-              <Alert severity='error'>The Game Info <b>aren't recorded</b>.</Alert>
+              <Alert severity='error'>The Game Info <b>isn't recorded</b>.</Alert>
               
 
             </Stack>
@@ -577,7 +577,7 @@ export default function Day2() {
               </Stack>
 
 
-              <Alert severity='error'>The Game Info <b>aren't recorded</b>.</Alert>
+              <Alert severity='error'>The Game Info <b>isn't recorded</b>.</Alert>
               
 
             </Stack>
