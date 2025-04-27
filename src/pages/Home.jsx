@@ -129,7 +129,7 @@ export default function Home() {
                   <Alert color='warning'>Please ignore Day 1 to 3, it wasn't recorded.</Alert>
 
                   <MenuList>
-                    <MenuItem component={Link} to="/intramurals/25/day2">
+                    <MenuItem disabled>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
