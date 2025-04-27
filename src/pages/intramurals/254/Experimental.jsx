@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createTheme, Divider, Stack, ThemeProvider, IconButton, ListItemText, List, ListItem, ListItemButton, CardContent, Grid, Stepper, Step, StepLabel } from '@mui/material';
+import { createTheme, Divider, Stack, ThemeProvider, IconButton, ListItemText, List, ListItem, ListItemButton, CardContent, Grid, Stepper, Step, StepLabel, Button } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -19,6 +19,7 @@ import Alert from '@mui/material/Alert';
 import FastfoodRoundedIcon from '@mui/icons-material/FastfoodRounded';
 import Card from '@mui/material/Card';
 import '@fontsource/roboto/300.css';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
@@ -83,17 +84,45 @@ export default function Exp() {
                 </Box>
                 <TabPanel value="1" sx={{ colorScheme: 'dark', p: 0, m: 0, maxHeight: '350px', overflow: 'hidden scroll' }}>
 
-                  <Box
-                    display="grid"
-                    gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }}
-                    sx={{mt: '10px'}}
-                    gap={2}
-                  >
-                    <Box bgcolor="primary.main" p={2}>Item 1</Box>
-                    <Box bgcolor="secondary.main" p={2}>Item 2</Box>
-                    <Box bgcolor="success.main" p={2}>Item 3</Box>
-                    <Box bgcolor="error.main" p={2}>Item 4</Box>
-                  </Box>
+                <Box
+                  display="grid"
+                  gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }}
+                  sx={{ mt: '10px' }}
+                  gap={2}
+                >
+
+                   <Button sx={{ width: '100%', gridColumn: 'span 3' }} color="success">
+                    <Stack width='100%' padding='5px' spacing='10px'>
+                      <Stack
+                        direction="row"
+                        sx={{
+                          mt: '3px',
+                          mb: '3px',
+                          justifyContent: 'space-between',
+                          alignItems: 'center', // Center the items vertically
+                          width: '100%',
+                        }}
+                      >
+                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> General Rehearsal
+                        </Typography>
+                        <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+                          7:00AM
+                        </Typography>
+                      </Stack>
+
+                      <Stack direction='row'>
+                        <Chip color="error" size="small" label="Red Eagles" />
+                      </Stack>
+                    </Stack>
+                  </Button>
+
+
+                </Box>
+
+
+
+
 
 
 
