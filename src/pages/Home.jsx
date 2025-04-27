@@ -150,8 +150,8 @@ export default function Home() {
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
-                          color="default"
-                          label="NOT"
+                          color="error"
+                          label="RN"
                         />
                         <Stack>
                           <Typography variant="body1">Day 4</Typography>

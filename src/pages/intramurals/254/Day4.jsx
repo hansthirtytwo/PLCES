@@ -64,7 +64,8 @@ export default function Day4() {
             bgcolor: 'background.paper',
             color: 'text.primary',
             borderRadius: 2,
-            maxHeight: '80vw',
+            maxHeight: '80vh',
+            overflow: 'hidden scroll',
             boxShadow: 24,
             p: 4,
             width: '80%',
@@ -567,6 +568,8 @@ export default function Day4() {
 
           )}
 
+          
+
 {selectedModal === 'badmintonMix' && (
   <Stack spacing={1}>
     <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
@@ -636,7 +639,7 @@ export default function Day4() {
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>Game</Typography>
-        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Place</Typography>
+        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Game</Typography>
       </Stack>
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
@@ -647,19 +650,34 @@ export default function Day4() {
       </Stack>
     </Stack>
 
-    <Typography variant='h6'>3rd Place Match</Typography>
+    <Typography variant='h6'>3rd Game Match</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
       <Card variant='outlined' sx={{gridColumn: "span 1"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Stack textAlign='center' color='primary.main'>
-              <Typography variant='h6'>Red</Typography>
+              <Typography variant='h6'>??</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
             <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
-              <Typography variant='h6'>Green</Typography>
+              <Typography variant='h6'>??</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
+          </Stack>
+        </CardContent>
+      </Card>
+      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+        <CardContent>
+          <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <Stack textAlign='center' color='primary.main'>
+              <Typography variant='h6'>??</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
+            <Typography variant='h6' color='gray'>vs</Typography>
+            <Stack textAlign='center'>
+              <Typography variant='h6'>??</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -703,16 +721,16 @@ export default function Day4() {
     <Typography variant='h6'>Finals Matchup</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Stack textAlign='center' color='primary.main'>
-              <Typography variant='h6'>Blue</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
             <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
-              <Typography variant='h6'>Red</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -742,7 +760,7 @@ export default function Day4() {
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>Game</Typography>
-        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Place</Typography>
+        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Game</Typography>
       </Stack>
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
@@ -753,17 +771,24 @@ export default function Day4() {
       </Stack>
     </Stack>
 
-    <Typography variant='h6'>3rd Place Match</Typography>
+    <Typography variant='h6'>3rd Game Match</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <Stack textAlign='center' color='primary.main'>
+            <Stack textAlign='center'>
               <Typography variant='h6'>Black</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
-            <Typography variant='h6' color='gray'>vs</Typography>
+            <Stack textAlign='center'>
+              <Typography variant='h6'>Blue</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
+            <Stack textAlign='center' color='primary.main'>
+              <Typography variant='h6'>Red</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
             <Stack textAlign='center'>
               <Typography variant='h6'>Green</Typography>
               <Typography variant='h5'>0</Typography>
@@ -809,16 +834,16 @@ export default function Day4() {
     <Typography variant='h6'>Finals Matchup</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Stack textAlign='center' color='primary.main'>
-              <Typography variant='h6'>Green</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
             <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
-              <Typography variant='h6'>Black</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -835,7 +860,7 @@ export default function Day4() {
 {selectedModal === 'gog3rd' && (
   <Stack spacing={1}>
     <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-      <Typography variant='h6'>Game of Generals - 3rd Place</Typography>
+      <Typography variant='h6'>Game of Generals - 3rd Game</Typography>
       <Typography>1:00-2:00PM</Typography>
     </Stack>
     <Divider/>
@@ -848,7 +873,7 @@ export default function Day4() {
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>Game</Typography>
-        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Place</Typography>
+        <Typography variant='h6' sx={{fontWeight: '400'}}>3rd Game</Typography>
       </Stack>
 
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
@@ -859,19 +884,26 @@ export default function Day4() {
       </Stack>
     </Stack>
 
-    <Typography variant='h6'>3rd Place Match</Typography>
+    <Typography variant='h6'>3rd Game Match</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <Stack textAlign='center' color='primary.main'>
+            <Stack textAlign='center'>
               <Typography variant='h6'>Blue</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
-            <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
+              <Typography variant='h6'>Black</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
+            <Stack textAlign='center' color='primary.main'>
               <Typography variant='h6'>Red</Typography>
+              <Typography variant='h5'>0</Typography>
+            </Stack>
+            <Stack textAlign='center'>
+              <Typography variant='h6'>Green</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -915,16 +947,16 @@ export default function Day4() {
     <Typography variant='h6'>Finals Matchup</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Stack textAlign='center' color='primary.main'>
-              <Typography variant='h6'>Red</Typography>
+              <Typography variant='h6'>Blue</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
             <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
-              <Typography variant='h6'>Black</Typography>
+              <Typography variant='h6'>Red???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -968,16 +1000,16 @@ export default function Day4() {
     <Typography variant='h6'>Finals Matchup</Typography>
     <Divider/>
     <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
-      <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+      <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Stack textAlign='center' color='primary.main'>
-              <Typography variant='h6'>Green</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
             <Typography variant='h6' color='gray'>vs</Typography>
             <Stack textAlign='center'>
-              <Typography variant='h6'>Blue</Typography>
+              <Typography variant='h6'>???</Typography>
               <Typography variant='h5'>0</Typography>
             </Stack>
           </Stack>
@@ -1079,6 +1111,8 @@ export default function Day4() {
 
           )}
 
+          
+
 
         </Card>
       </Modal>
@@ -1117,14 +1151,24 @@ export default function Day4() {
                 <Alert color='info'>Page is still in development</Alert>
                 <Box
                   display="grid"
-                  gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
-                  sx={{ mt: '10px' }}
                   gap={0.5}
+                  sx={{
+                    mt: '10px',
+                    gridTemplateColumns: {
+                      xs: '1fr',         // 1 column on mobile
+                      sm: 'repeat(2, 1fr)', // 2 columns on small screens
+                      md: 'repeat(4, 1fr)'  // 4 columns on medium screens
+                    },
+                    '& > *': {           // Target all direct children
+                      minWidth: 0,       // Prevent overflow
+                      width: '100%'      // Ensure full width
+                    }
+                  }}
                 >
 
               
 
-                <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('genrel')}>
+                <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('genrel')} color='success'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1137,7 +1181,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> General Assembly
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> General Assembly
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           8:30-8:30AM
@@ -1151,7 +1195,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('ssf')}>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('ssf')} color='success'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1164,7 +1208,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> Shake Shake Fries
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Shake Shake Fries
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           8:30-9:30AM
@@ -1179,7 +1223,7 @@ export default function Day4() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('tt')}>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('tt')} color='success'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1192,7 +1236,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> Table Tennis
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Table Tennis
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           8:30-9:30AM
@@ -1206,7 +1250,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('bbjr')}>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('bbjr')} color='success'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1219,7 +1263,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> Basketball JR
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Basketball JR
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           9:30-11:00AM
@@ -1234,7 +1278,7 @@ export default function Day4() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog')}>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog')} color='success'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1247,7 +1291,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> GOG
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> GOG
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           9:30-11:00AM
@@ -1542,31 +1586,7 @@ export default function Day4() {
                   
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} color="info">
-                    <Stack width='100%' padding='5px' spacing='10px'>
-                      <Stack
-                        direction="row"
-                        sx={{
-                          mt: '3px',
-                          mb: '3px',
-                          justifyContent: 'space-between',
-                          alignItems: 'center', // Center the items vertically
-                          width: '100%',
-                        }}
-                      >
-                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> Lunch
-                        </Typography>
-                        <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-                          11:00-12:00PM
-                        </Typography>
-                      </Stack>
-
-                    </Stack>
-                  </Button>
-
-
-
+                  
 
                   
 
