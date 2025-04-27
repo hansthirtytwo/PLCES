@@ -604,7 +604,7 @@ export default function Day2() {
             sx={{
               p: { xs: 1, sm: 2 },
               width: { xs: '95vw', sm: '90vw', md: '80vw' },
-              maxWidth: '1200px',
+              maxWidth: '1200px'
             }}
           >
             <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -616,7 +616,7 @@ export default function Day2() {
                     <Tab label="Top" value="2" />
                   </TabList>
                 </Box>
-                <TabPanel value="1" sx={{ p: 0, m: 0 }}>
+                <TabPanel value="1" sx={{ p: 0, m: 0, maxHeight: '350px', overflow: 'hidden scroll' }}>
                   <MenuList>
 
 
