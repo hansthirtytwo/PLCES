@@ -64,6 +64,7 @@ export default function Day4() {
             bgcolor: 'background.paper',
             color: 'text.primary',
             borderRadius: 2,
+            maxHeight: '80vw',
             boxShadow: 24,
             p: 4,
             width: '80%',
