@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { 
-  createTheme, Divider, Stack, ThemeProvider, CardContent, 
-  Button, ButtonGroup, 
-  Box, Tab, Paper, Modal, Typography, Chip, Card,
+  createTheme, Divider, Stack, ThemeProvider, Button, ButtonGroup, 
+  Box, Tab, Paper, Modal, Typography, Chip, Card, CardContent 
 } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import TabContext from '@mui/lab/TabContext';
@@ -23,7 +22,7 @@ export default function Day1() {
   const [rightTeam, setRightTeam] = useState(null);
   const [team1, setTeam1] = useState(null);
   const [team2, setTeam2] = useState(null);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
 
 
@@ -175,30 +174,105 @@ export default function Day1() {
                 <CardContent sx={{ textAlign: 'center' }}>
                   {team1 && team2 ? (
                     <>
-                      <Typography variant="h5" sx={{ mb: 2 }}>
-                        {team1} VS {team2}
-                      </Typography>
                       <Typography variant="body1">
-                      {((team1 === 'Blue' && team2 === 'Red') || (team1 === 'Red' && team2 === 'Blue')) && (
-                        <Stack>
-
-                          <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <Stack textAlign='center' color='primary.main'>
-                              <Typography variant='h6'>Blue</Typography>
-                              <Typography variant='h5'>2</Typography>
-                            </Stack>
-                            <Typography variant='h6' color='gray'>vs</Typography>
-                            <Stack textAlign='center'>
-                              <Typography variant='h6'>Red</Typography>
-                              <Typography variant='h5'>1</Typography>
-                            </Stack>
-                          </Stack>
-
+                      <Stack>
+                        <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                           
-                        </Stack>
-
+                          {((team1 === 'Blue' && team2 === 'Red') || (team1 === 'Red' && team2 === 'Blue')) && (
+                            
+                              <>
+                                <Stack textAlign='center' color='primary.main'>
+                                  <Typography variant='h6'>Blue</Typography>
+                                  <Typography variant='h5'>2</Typography>
+                                </Stack>
+                                <Typography variant='h6' color='gray'>vs</Typography>
+                                <Stack textAlign='center'>
+                                  <Typography variant='h6'>Red</Typography>
+                                  <Typography variant='h5'>1</Typography>
+                                </Stack>
+                              </>
+                            
+                          )}
+                              {((team1 === 'Blue' && team2 === 'Green') || (team1 === 'Green' && team2 === 'Blue')) && (
+                            
+                            <>
+                              <Stack textAlign='center'>
+                                <Typography variant='h6'>Blue</Typography>
+                                <Typography variant='h5'>1</Typography>
+                              </Stack>
+                              <Typography variant='h6' color='gray'>vs</Typography>
+                              <Stack textAlign='center' color='primary.main'>
+                                <Typography variant='h6'>Green</Typography>
+                                <Typography variant='h5'>2</Typography>
+                              </Stack>
+                            </>
+                          
+                        )}
+                            {((team1 === 'Blue' && team2 === 'Black') || (team1 === 'Black' && team2 === 'Blue')) && (
+                            
+                            <>
+                              <Stack textAlign='center'>
+                                <Typography variant='h6'>Blue</Typography>
+                                <Typography variant='h5'>0</Typography>
+                              </Stack>
+                              <Typography variant='h6' color='gray'>vs</Typography>
+                              <Stack textAlign='center' color='primary.main'>
+                                <Typography variant='h6'>Black</Typography>
+                                <Typography variant='h5'>1</Typography>
+                              </Stack>
+                            </>
+                          
+                        )}
+                            {((team1 === 'Red' && team2 === 'Black') || (team1 === 'Black' && team2 === 'Red')) && (
+                            
+                            <>
+                              <Stack textAlign='center'>
+                                <Typography variant='h6'>Black</Typography>
+                                <Typography variant='h5'>0</Typography>
+                              </Stack>
+                              <Typography variant='h6' color='gray'>vs</Typography>
+                              <Stack textAlign='center' color='primary.main'>
+                                <Typography variant='h6'>Red</Typography>
+                                <Typography variant='h5'>1</Typography>
+                              </Stack>
+                            </>
+                          
+                        )}
+                            {((team1 === 'Red' && team2 === 'Green') || (team1 === 'Green' && team2 === 'Red')) && (
+                            
+                            <>
+                              <Stack textAlign='center' color='primary.main'>
+                                <Typography variant='h6'>Red</Typography>
+                                <Typography variant='h5'>1</Typography>
+                              </Stack>
+                              <Typography variant='h6' color='gray'>vs</Typography>
+                              <Stack textAlign='center'>
+                                <Typography variant='h6'>Green</Typography>
+                                <Typography variant='h5'>0</Typography>
+                              </Stack>
+                            </>
+                          
+                        )}
+                            {((team1 === 'Black' && team2 === 'Green') || (team1 === 'Green' && team2 === 'Black')) && (
+                            
+                            <>
+                              <Stack textAlign='center' color='primary.main'>
+                                <Typography variant='h6'>Black</Typography>
+                                <Typography variant='h5'>2</Typography>
+                              </Stack>
+                              <Typography variant='h6' color='gray'>vs</Typography>
+                              <Stack textAlign='center'>
+                                <Typography variant='h6'>Green</Typography>
+                                <Typography variant='h5'>1</Typography>
+                              </Stack>
+                            </>
+                          
+                        )}
                         
-                      )}
+
+
+                        </Stack>
+                      </Stack>
                       </Typography>
                     </>
                   ) : (
@@ -209,6 +283,24 @@ export default function Day1() {
                 </CardContent>
 
               </Card>
+
+
+              <Stack direction='row'>
+                <Chip color="success" icon={<CheckRoundedIcon />} label="GG" />
+              </Stack>
+
+            </Stack>
+
+          )}
+          {selectedModal === 'notav' && (
+            <Stack spacing={1}>
+              <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                <Typography variant='h6'>N/R</Typography>
+                <Typography>Not Recorded</Typography>
+              </Stack>
+              <Divider/>
+
+              <Typography>Sorry, but this game's info was not recorded.</Typography>
 
 
               <Stack direction='row'>
@@ -256,14 +348,14 @@ export default function Day1() {
 
                 <Box
                   display="grid"
-                  gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr' }}
+                  gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
                   sx={{ mt: '10px' }}
                   gap={0.5}
                 >
 
 
 
-<Button sx={{ width: '100%', gridColumn: 'span 3' }} onClick={handleOpen('genrel')} color="success">
+                <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('genrel')} color="success">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -290,7 +382,7 @@ export default function Day1() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 3' }} onClick={handleOpen('db')} color="success">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('db')} color="success">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -318,7 +410,7 @@ export default function Day1() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 3' }} onClick={handleOpen('float')} color="success">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('notav')} color="success">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -331,10 +423,10 @@ export default function Day1() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Float Parade
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Mobile Legends
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-                          8:00-9:30AM
+                          8:30-10:00AM
                         </Typography>
                       </Stack>
 
@@ -343,7 +435,7 @@ export default function Day1() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 3' }} color="info">
+                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} color="info">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -372,7 +464,7 @@ export default function Day1() {
                   
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 3' }} color="info">
+                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} color="info">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
