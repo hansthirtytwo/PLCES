@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createTheme, Stack, ThemeProvider, Stepper, Step, StepLabel, StepContent, StepIcon, LinearProgress, Avatar, Card, Divider } from '@mui/material';
+import { createTheme, Stack, ThemeProvider, Stepper, Step, StepLabel, StepContent, StepIcon, LinearProgress, Avatar, Card, Divider, Alert } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -119,14 +119,67 @@ export default function Home() {
                         <MilitaryTechRoundedIcon color='warning' fontSize='large'/>
                         <Stack>
                           <Typography fontWeight={'bold'} variant='h5'>Red Eagles</Typography>
-                          <Typography>1000 pts</Typography>
+                          <Typography>???? pts</Typography>
                         </Stack>
                       </Stack>
                     </Stack>
                   </Card>
 
+
+                  <Alert color='warning'>Please ignore Day 1 to 3, it wasn't recorded.</Alert>
+
                   <MenuList>
                     <MenuItem component={Link} to="/intramurals/25/day2">
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip
+                          sx={{ marginRight: { xs: 1, sm: 2 } }}
+                          color="default"
+                          label="NOT"
+                        />
+                        <Stack>
+                          <Typography variant="body1">Day 5</Typography>
+                          <Typography color="gray" variant="body2">
+                            Apr 24, 2025
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+
+                    <MenuItem component={Link} to="/intramurals/25/day4">
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip
+                          sx={{ marginRight: { xs: 1, sm: 2 } }}
+                          color="default"
+                          label="NOT"
+                        />
+                        <Stack>
+                          <Typography variant="body1">Day 4</Typography>
+                          <Typography color="gray" variant="body2">
+                            Apr 24, 2025
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+
+                    <MenuItem component={Link} to="/intramurals/25/day2" disabled>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Chip
+                          sx={{ marginRight: { xs: 1, sm: 2 } }}
+                          color="success"
+                          label="GG"
+                        />
+                        <Stack>
+                          <Typography variant="body1">Day 3</Typography>
+                          <Typography color="gray" variant="body2">
+                            Apr 25, 2025
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </MenuItem>
+
+                    <MenuItem component={Link} to="/intramurals/25/day2" disabled>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
@@ -144,7 +197,7 @@ export default function Home() {
 
 
 
-                    <MenuItem component={Link} to="/intramurals/25/day1">
+                    <MenuItem component={Link} to="/intramurals/25/day1" disabled>
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
