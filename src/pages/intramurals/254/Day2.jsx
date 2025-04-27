@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import { 
-  createTheme, Divider, Stack, ThemeProvider, IconButton, ListItemText, List, ListItem, ListItemButton, CardContent, 
-  Grid, Stepper, Step, StepLabel, Button, AvatarGroup, Avatar, CardActionArea, CardActions, ButtonGroup, 
-  Table, TableBody, TableContainer, TableCell, TableRow, TableHead, 
-  Box, Tab, Paper, Modal, Typography, MenuList, MenuItem, Chip, Alert, Card,
-  Collapse
+  createTheme, Divider, Stack, ThemeProvider, CardContent, 
+  Button, ButtonGroup, 
+  Box, Tab, Paper, Modal, Typography, Chip, Card,
 } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Link } from 'react-router-dom';
-import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import FastfoodRoundedIcon from '@mui/icons-material/FastfoodRounded';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
