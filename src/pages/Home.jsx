@@ -169,7 +169,7 @@ export default function Home() {
               <TabPanel value="2" sx={{ textAlign: 'center', padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
                  
                   <Typography sx={{mt: '20px', fontWeight: 'bold'}} variant='h4'>PLCES</Typography>
-                  <Typography sx={{mb: '20px'}}>Probably Live CAM Event Scores or PLCES for short is a website made by Hans to track event scores and to record them.</Typography>
+                  <Typography sx={{mb: '20px'}}>WEBSITE HACKED BY LANCE OR .HAHKAGHS</Typography>
 
 
               </TabPanel>
