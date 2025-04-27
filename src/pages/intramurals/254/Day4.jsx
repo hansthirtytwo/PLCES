@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { 
   createTheme, Divider, Stack, ThemeProvider, Button, ButtonGroup, 
-  Box, Tab, Paper, Modal, Typography, Chip, Card, CardContent, Grid 
+  Box, Tab, Paper, Modal, Typography, Chip, Card, CardContent, Grid, 
+  Alert
 } from '@mui/material';
 import { orange, blue } from '@mui/material/colors';
 import TabContext from '@mui/lab/TabContext';
@@ -1112,6 +1113,7 @@ export default function Day4() {
                 </Box>
                 <TabPanel value="1" sx={{ colorScheme: 'dark', p: 0, m: 0, maxHeight: '350px', overflow: 'hidden scroll' }}>
 
+                <Alert color='info'>Page is still in development</Alert>
                 <Box
                   display="grid"
                   gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' }}
@@ -1119,7 +1121,7 @@ export default function Day4() {
                   gap={0.5}
                 >
 
-
+              
 
                 <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('genrel')}>
                     <Stack width='100%' padding='5px' spacing='10px'>
@@ -1397,7 +1399,7 @@ export default function Day4() {
                     </Stack>
                   </Button>
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMenSR')}>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMenSr')}>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1577,7 +1579,7 @@ export default function Day4() {
 
                 </TabPanel>
                 <TabPanel value="2" sx={{ p: 0, m: 0 }}>
-                  
+                  <Typography>Will be processed at the end of the day.</Typography>
                 </TabPanel>
               </TabContext>
             </Box>
