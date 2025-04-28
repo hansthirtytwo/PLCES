@@ -1179,7 +1179,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('ssf')} color='success'>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('ssf')} color='error'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1207,7 +1207,7 @@ export default function Day4() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('tt')} color='success'>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('tt')} color='error'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1234,7 +1234,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('bbjr')} color='success'>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('bbjr')} color='error'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1262,7 +1262,7 @@ export default function Day4() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog')} color='success'>
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog')} color='error'>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
