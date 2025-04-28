@@ -495,7 +495,7 @@ export default function Day4() {
                 
                 <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
                   <Typography variant='h5' sx={{fontWeight: 'bold'}}>Venue</Typography>
-                  <Typography variant='h6' sx={{fontWeight: '400'}}>Playroom</Typography>
+                  <Typography variant='h6' sx={{fontWeight: '400'}}>Grade 2</Typography>
                 </Stack>
 
 
@@ -517,25 +517,7 @@ export default function Day4() {
               <Divider/>
               <Grid container gap={1} display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr', md: '1fr 1f' }} sx={{ mt: '10px' }}>
                 
-                <Card variant='outlined' sx={{gridColumn: "span 1"}}>
-                  <CardContent>
-                    <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                      
-                      <Stack textAlign='center' color='primary.main'>
-                        <Typography variant='h6'>Black</Typography>
-                        <Typography variant='h5'>0</Typography>
-                      </Stack>
-                      <Typography variant='h6' color='gray'>vs</Typography>
-                      <Stack textAlign='center'>
-                        <Typography variant='h6'>Green</Typography>
-                        <Typography variant='h5'>0</Typography>
-                      </Stack>
-
-                    </Stack>
-                  </CardContent>
-                </Card>
-
-                <Card variant='outlined' sx={{gridColumn: "span 1"}}>
+                <Card variant='outlined' sx={{gridColumn: "span 2"}}>
                   <CardContent>
                     <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                       
@@ -552,6 +534,8 @@ export default function Day4() {
                     </Stack>
                   </CardContent>
                 </Card>
+
+                
 
               </Grid>
 
@@ -1148,7 +1132,7 @@ export default function Day4() {
                 </Box>
                 <TabPanel value="1" sx={{ colorScheme: 'dark', p: 0, m: 0, maxHeight: '350px', overflow: 'hidden scroll' }}>
 
-                <Alert color='info'>Page is still in development</Alert>
+                <Alert color='info'>Page is still in development. If you're on phone, please turn it to landscape mode.</Alert>
                 <Box
                   display="grid"
                   gap={0.5}
