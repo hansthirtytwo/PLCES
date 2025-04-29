@@ -776,7 +776,7 @@ export default function Day4() {
       <Stack sx={{textTransform: 'uppercase', textAlign: 'center', mt: '10px', mb: '10px'}}>
         <Typography variant='h5' sx={{fontWeight: 'bold'}}>Delegates</Typography>
         <Typography variant='h6' sx={{fontWeight: '400'}}>
-          <Chip sx={{backgroundColor: "#aa42ff", m: 0.2}} size="small" label="Ms. D" />
+          <Chip sx={{backgroundColor: "#aa42ff", m: 0.2}} size="small" label="Ms. Di" />
         </Typography>
       </Stack>
     </Stack>
@@ -787,21 +787,21 @@ export default function Day4() {
       <Card variant='outlined' sx={{gridColumn: "span 2"}}>
         <CardContent>
           <Stack direction="row" sx={{ mt: '3px', mb: '3px', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <Stack textAlign='center'>
+            <Stack textAlign='center' color='primary.main'>
               <Typography variant='h6'>Black</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>10</Typography>
             </Stack>
             <Stack textAlign='center'>
               <Typography variant='h6'>Blue</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>?</Typography>
             </Stack>
-            <Stack textAlign='center' color='primary.main'>
+            <Stack textAlign='center'>
               <Typography variant='h6'>Red</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>?</Typography>
             </Stack>
             <Stack textAlign='center'>
               <Typography variant='h6'>Green</Typography>
-              <Typography variant='h5'>0</Typography>
+              <Typography variant='h5'>?</Typography>
             </Stack>
           </Stack>
         </CardContent>
@@ -1357,7 +1357,7 @@ export default function Day4() {
                           <HourglassBottomRounded sx={{ mr: '10px' }} /> Lunch
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-                          9:30-10:0AM
+                          ???
                         </Typography>
                       </Stack>
 
@@ -1369,7 +1369,7 @@ export default function Day4() {
                   
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMix')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMix')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1397,7 +1397,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('mobileLegends')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('mobileLegends')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1424,7 +1424,7 @@ export default function Day4() {
                     </Stack>
                   </Button>
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonWomenSr')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonWomenSr')}  color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1451,7 +1451,7 @@ export default function Day4() {
                     </Stack>
                   </Button>
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('scrabble')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('scrabble')}  color="success">
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1464,7 +1464,7 @@ export default function Day4() {
                         }}
                       >
                         <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
-                          <HourglassBottomRounded sx={{ mr: '10px' }} /> Scrabble
+                          <CheckRoundedIcon sx={{ mr: '10px' }} /> Scrabble
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
                           1:00-2:00PM
@@ -1478,7 +1478,7 @@ export default function Day4() {
                     </Stack>
                   </Button>
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMenSr')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('badmintonMenSr')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1505,7 +1505,7 @@ export default function Day4() {
                     </Stack>
                   </Button>
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog3rd')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 2' }} onClick={handleOpen('gog3rd')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1517,7 +1517,7 @@ export default function Day4() {
                           width: '100%',
                         }}
                       >
-                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }} color="error">
+                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
                           <HourglassBottomRounded sx={{ mr: '10px' }} /> GOG
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
@@ -1533,7 +1533,7 @@ export default function Day4() {
                   </Button>
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('badmintonMenJr')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('badmintonMenJr')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1545,7 +1545,7 @@ export default function Day4() {
                           width: '100%',
                         }}
                       >
-                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }} color="error">
+                        <Typography sx={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
                           <HourglassBottomRounded sx={{ mr: '10px' }} /> Badminton Men JR
                         </Typography>
                         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
@@ -1562,7 +1562,7 @@ export default function Day4() {
 
 
                   
-                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('badmintonWomenJr')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('badmintonWomenJr')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"
@@ -1591,7 +1591,7 @@ export default function Day4() {
 
 
 
-                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('basketballSr')} color="error">
+                  <Button sx={{ width: '100%', gridColumn: 'span 4' }} onClick={handleOpen('basketballSr')} color="white" disabled>
                     <Stack width='100%' padding='5px' spacing='10px'>
                       <Stack
                         direction="row"

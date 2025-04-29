@@ -17,6 +17,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { Helmet } from 'react-helmet';
 
 export default function Home() {
   const [value, setValue] = useState('1');
@@ -34,7 +35,16 @@ export default function Home() {
   });
 
   return (
+    
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <title>PLCES</title>
+        <meta property="og:title" content="PLCES" />
+        <meta property="og:description" content="Probably Live Cam Event Scores..." />
+        <meta property="og:url" content="https://plces.vercel.app/" />
+        <meta name="theme-color" content="#fc9e2a" />
+      </Helmet>
+
       <Box sx={{ display: 'flex', justifyContent: 'center', width: '100vw', height: '100vh', alignItems: 'center' }}>
         <Stack>
           <Typography textAlign='center' typography='h2' fontWeight='500' sx={{ marginBottom: '10px' }}>PLCES</Typography>
@@ -60,6 +70,7 @@ export default function Home() {
                 </Box>
                 <TabPanel value="1" sx={{ padding: 0, margin: 0, maxHeight: '500px', overflow: 'scroll', overflowX: 'hidden' }}>
 
+                  <Alert color='error'>Wont be recording this intrams anymore cuz my organization sucks :(</Alert>
 
                   <Stepper sx={{p: 3}} activeStep={4} alternativeLabel style={{color: "#eaeaf0"}}>
                     <Step>
@@ -111,30 +122,13 @@ export default function Home() {
                   </Stepper>
 
 
-                  <Card variant='outlined' sx={{m: 1, p: 2}}>
-                    <Stack spacing='10px'>
-                      <Typography variant='h6'>Champions Prediction</Typography>
-                      <Divider/>
-                      <Stack spacing={1} direction='row' sx={{alignItems: 'center'}}>
-                        <MilitaryTechRoundedIcon color='warning' fontSize='large'/>
-                        <Stack>
-                          <Typography fontWeight={'bold'} variant='h5'>Red Eagles</Typography>
-                          <Typography>???? pts</Typography>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                  </Card>
-
-
-                  <Alert color='warning'>Please ignore Day 1 to 3, it wasn't recorded.</Alert>
-
                   <MenuList>
                     <MenuItem disabled>
-                      <Stack direction="row" spacing={2} alignItems="center">
+                      <Stack direction="row" spacing={2} alignItems="success">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
                           color="default"
-                          label="NOT"
+                          label="GG"
                         />
                         <Stack>
                           <Typography variant="body1">Day 5</Typography>
@@ -150,8 +144,8 @@ export default function Home() {
                       <Stack direction="row" spacing={2} alignItems="center">
                         <Chip
                           sx={{ marginRight: { xs: 1, sm: 2 } }}
-                          color="error"
-                          label="RN"
+                          color="success"
+                          label="GG"
                         />
                         <Stack>
                           <Typography variant="body1">Day 4</Typography>
@@ -222,7 +216,7 @@ export default function Home() {
               <TabPanel value="2" sx={{ textAlign: 'center', padding: 0, margin: 0, maxHeight: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
                  
                   <Typography sx={{mt: '20px', fontWeight: 'bold'}} variant='h4'>PLCES</Typography>
-                  <Typography sx={{mb: '20px'}}>WEBSITE HACKED BY LANCE OR .HAHKAGHS</Typography>
+                  <Typography sx={{mb: '20px'}}>Probably Live Cam Event Scores or PLCES is a website horribly made by Hans :D</Typography>
 
 
               </TabPanel>
