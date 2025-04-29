@@ -200,12 +200,12 @@ export default function Day4() {
                               {((team1 === 'Blue' && team2 === 'Green') || (team1 === 'Green' && team2 === 'Blue')) && (
                             
                             <>
-                              <Stack textAlign='center'>
+                              <Stack textAlign='center' color='primary.main'>
                                 <Typography variant='h6'>Blue</Typography>
                                 <Typography variant='h5'>5</Typography>
                               </Stack>
                               <Typography variant='h6' color='gray'>vs</Typography>
-                              <Stack textAlign='center' color='primary.main'>
+                              <Stack textAlign='center'>
                                 <Typography variant='h6'>Green</Typography>
                                 <Typography variant='h5'>0</Typography>
                               </Stack>
@@ -215,12 +215,12 @@ export default function Day4() {
                             {((team1 === 'Blue' && team2 === 'Black') || (team1 === 'Black' && team2 === 'Blue')) && (
                             
                             <>
-                              <Stack textAlign='center'>
+                              <Stack textAlign='center' color='primary.main'>
                                 <Typography variant='h6'>Blue</Typography>
                                 <Typography variant='h5'>5</Typography>
                               </Stack>
                               <Typography variant='h6' color='gray'>vs</Typography>
-                              <Stack textAlign='center' color='primary.main'>
+                              <Stack textAlign='center'>
                                 <Typography variant='h6'>Black</Typography>
                                 <Typography variant='h5'>0</Typography>
                               </Stack>
