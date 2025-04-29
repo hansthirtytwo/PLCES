@@ -72,7 +72,7 @@ export default function Home() {
 
                   <Alert color='error'>Wont be recording this intrams anymore cuz my organization sucks :(</Alert>
 
-                  <Stepper sx={{p: 3}} activeStep={4} alternativeLabel style={{color: "#eaeaf0"}}>
+                  <Stepper sx={{p: 3}} activeStep={6} alternativeLabel style={{color: "#eaeaf0"}}>
                     <Step>
                       <StepLabel>
                           <Typography>Advanced Games</Typography>
