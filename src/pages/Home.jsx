@@ -18,6 +18,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Helmet } from 'react-helmet';
+import { Analytics } from "@vercel/analytics/react"
 
 export default function Home() {
   const [value, setValue] = useState('1');
@@ -217,7 +218,7 @@ export default function Home() {
                  
                   <Typography sx={{mt: '20px', fontWeight: 'bold'}} variant='h4'>PLCES</Typography>
                   <Typography sx={{mb: '20px'}}>Probably Live Cam Event Scores or PLCES is a website horribly made by Hans :D</Typography>
-
+                  <Analytics/>
 
               </TabPanel>
                 
