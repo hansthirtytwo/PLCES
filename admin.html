@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLCES Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Theme Variables ── */
+    :root {
+      --bg: #f5f5f5;
+      --text: #111;
+      --card-bg: #fff;
+      --border: #e0e0e0;
+      --accent: #FF3A00;
+      --accent-hover: #e63500;
+      --gray: #888;
+      --gray-light: #f0f0f0;
+      --input-bg: #f9f9f9;
+      --success: #27AE60;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --text: #ffffff;
+      --card-bg: #1a1a1a;
+      --border: #333333;
+      --gray-light: #2a2a2a;
+      --input-bg: #111111;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    h1,h2,h3,h4,p { margin: 0; padding: 0; }
+
+    /* ── Typography & UI Styles matching Main App ── */
+    .title-text {
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 16px;
+      transition: all 150ms ease;
+    }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn-danger { background: transparent; color: #FF3A00; border: 2px solid #FF3A00; }
+    .btn-danger:hover { background: #FF3A00; color: white; }
+    .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
+    .btn-outline:hover { border-color: var(--text); }
+
+    input, select {
+      font-family: 'Inter', sans-serif;
+      background: var(--input-bg);
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--text);
+      color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      gap: 16px;
+    }
+    .topbar-title { font-size: 1.5rem; }
+    .topbar-title span { color: var(--accent); }
+    
+    .topbar-controls { display: flex; align-items: center; gap: 16px; }
+    .status { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray); }
+    .status-dot.live { background: var(--success); box-shadow: 0 0 0 3px rgba(39,174,96,.25); }
+    .status-dot.error { background: #FF3A00; }
+
+    /* ── Nav Bars (Events & Days) ── */
+    .nav-bar {
+      display: flex;
+      gap: 10px;
+      background: var(--card-bg);
+      border-bottom: 2px solid var(--border);
+      overflow-x: auto;
+      padding: 12px 24px;
+      align-items: center;
+    }
+    .nav-label { font-weight: 800; font-size: 0.8rem; color: var(--gray); text-transform: uppercase; margin-right: 10px; }
+    
+    .nav-tab {
+      padding: 8px 16px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: var(--gray-light);
+      color: var(--gray);
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: all 150ms;
+    }
+    .nav-tab.active { background: var(--text); color: var(--bg); }
+    .nav-tab:hover:not(.active) { border-color: var(--gray); color: var(--text); }
+
+    /* ── Main content ── */
+    .content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* ── Game card ── */
+    .game-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--gray-light);
+      gap: 12px;
+    }
+    .game-title { font-size: 1.2rem; flex: 1; }
+    .game-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
+    
+    .tag {
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 3px; background: var(--border); color: var(--text);
+    }
+    .tag.accent { background: var(--accent); color: white; }
+
+    .game-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+    
+    .game-controls {
+      display: flex; gap: 8px; margin-top: 10px;
+      padding-top: 12px; border-top: 1px dashed var(--border);
+    }
+
+    /* ── Versus editor ── */
+    .match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .team-name { font-weight: 800; font-size: 0.85rem; width: 80px; text-transform: uppercase; }
+    .score-input {
+      width: 70px; padding: 8px; font-size: 1.3rem; font-weight: 900; 
+      font-style: italic; text-align: center;
+    }
+    .vs-divider { font-weight: 800; font-style: italic; color: var(--gray); }
+
+    /* ── Modals ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 200ms; z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: var(--card-bg); border-radius: 8px; width: 100%; max-width: 500px;
+      max-height: 90vh; overflow-y: auto; padding: 24px;
+      transform: translateY(20px); transition: transform 200ms;
+      border: 2px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    .modal-overlay.open .modal-content { transform: translateY(0); }
+    
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; color: var(--gray); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+    /* Matchup Editor inside Game Modal */
+    .matchup-editor-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .matchup-editor-row input { flex: 1; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title title-text">PLCES <span>ADMIN</span></div>
+  <div class="topbar-controls">
+    <div class="status">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">CONNECTING</span>
+    </div>
+    <button class="btn btn-outline" style="color:var(--bg); border-color:var(--gray);" id="theme-btn">🌙</button>
+    <button class="btn btn-accent" id="btn-save-all">SAVE TO SERVER</button>
+  </div>
+</div>
+
+<div class="nav-bar" id="events-bar">
+  </div>
+
+<div class="nav-bar" id="days-bar">
+  </div>
+
+<div class="content">
+  <div class="section-header">
+    <h2 class="title-text" style="font-size: 2rem;" id="day-title-display">GAMES</h2>
+    <button class="btn btn-primary" id="btn-add-game">+ ADD GAME</button>
+  </div>
+  <div id="games-container">
+    </div>
+</div>
+
+<div class="modal-overlay" id="editor-modal">
+  <div class="modal-content">
+    <h2 class="title-text" id="modal-title" style="margin-bottom: 20px; font-size: 1.8rem;">EDIT</h2>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="modal-cancel">CANCEL</button>
+      <button class="btn btn-primary" id="modal-save">CONFIRM</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──
+let db = {};
+let currentEventId = null;
+let currentDayIdx = 0;
+let ws = null;
+let isDark = localStorage.getItem('plces_admin_theme') === 'dark';
+
+// ── Theme ──
+function applyTheme() {
+  if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+}
+document.getElementById('theme-btn').addEventListener('click', () => {
+  isDark = !isDark;
+  localStorage.setItem('plces_admin_theme', isDark ? 'dark' : 'light');
+  applyTheme();
+});
+applyTheme();
+
+// ── WebSocket & Data Fetching ──
+function connectWS() {
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(proto + '//' + location.host + '/ws');
+  ws.onopen = () => setStatus('live', 'LIVE');
+  ws.onclose = () => { setStatus('error', 'DISCONNECTED'); setTimeout(connectWS, 3000); };
+  ws.onerror = () => setStatus('error', 'ERROR');
+  ws.onmessage = (ev) => {
+    try {
+      const msg = JSON.parse(ev.data);
+      if (msg.type === 'data_update' && msg.data && Object.keys(db).length === 0) {
+        db = msg.data;
+        refreshUI();
+      }
+    } catch(e) {}
+  };
+}
+
+function setStatus(state, text) {
+  const dot = document.getElementById('status-dot');
+  const span = document.getElementById('status-text');
+  dot.className = 'status-dot ' + state;
+  span.textContent = text;
+}
+
+function loadData() {
+  fetch('/api/data').then(r => r.json()).then(res => {
+    db = res.data || {};
+    refreshUI();
+  }).catch(() => setStatus('error', 'FETCH ERROR'));
+}
+
+function saveToServer() {
+  const btn = document.getElementById('btn-save-all');
+  btn.textContent = 'SAVING...';
+  fetch('/api/data', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: db })
+  }).then(r => r.json()).then(() => {
+    btn.textContent = 'SAVED ✓';
+    btn.style.background = 'var(--success)';
+    setTimeout(() => { btn.textContent = 'SAVE TO SERVER'; btn.style.background = ''; }, 2000);
+  }).catch(() => {
+    btn.textContent = 'ERROR!';
+    setTimeout(() => { btn.textContent = 'SAVE TO SERVER'; }, 2000);
+  });
+}
+
+document.getElementById('btn-save-all').addEventListener('click', saveToServer);
+
+// ── Rendering ──
+function refreshUI() {
+  if (!db || Object.keys(db).length === 0) return;
+  if (!currentEventId || !db[currentEventId]) {
+    currentEventId = Object.keys(db)[0];
+    currentDayIdx = 0;
+  }
+  if (db[currentEventId] && !db[currentEventId].days[currentDayIdx]) {
+    currentDayIdx = 0;
+  }
+  
+  renderEventsBar();
+  renderDaysBar();
+  renderGames();
+}
+
+function renderEventsBar() {
+  const bar = document.getElementById('events-bar');
+  bar.innerHTML = '<span class="nav-label">Event</span>';
+  
+  Object.keys(db).forEach(id => {
+    const ev = db[id];
+    const btn = document.createElement('button');
+    btn.className = `nav-tab ${id === currentEventId ? 'active' : ''}`;
+    btn.textContent = ev.name || id;
+    btn.onclick = () => { currentEventId = id; currentDayIdx = 0; refreshUI(); };
+    bar.appendChild(btn);
+  });
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'nav-tab';
+  addBtn.textContent = '+ ADD EVENT';
+  addBtn.onclick = openEventEditor;
+  bar.appendChild(addBtn);
+
+  if (currentEventId) {
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-outline';
+    editBtn.style.padding = '4px 8px';
+    editBtn.style.marginLeft = 'auto';
+    editBtn.textContent = '⚙️ EDIT EVENT';
+    editBtn.onclick = () => openEventEditor(currentEventId);
+    bar.appendChild(editBtn);
+  }
+}
+
+function renderDaysBar() {
+  const bar = document.getElementById('days-bar');
+  bar.innerHTML = '<span class="nav-label">Day</span>';
+  
+  const ev = db[currentEventId];
+  if (!ev) return;
+
+  (ev.days || []).forEach((day, i) => {
+    const btn = document.createElement('button');
+    btn.className = `nav-tab ${i === currentDayIdx ? 'active' : ''}`;
+    btn.textContent = day.name || `Day ${i+1}`;
+    btn.onclick = () => { currentDayIdx = i; refreshUI(); };
+    bar.appendChild(btn);
+  });
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'nav-tab';
+  addBtn.textContent = '+ ADD DAY';
+  addBtn.onclick = openDayEditor;
+  bar.appendChild(addBtn);
+
+  if (ev.days && ev.days[currentDayIdx]) {
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-outline';
+    editBtn.style.padding = '4px 8px';
+    editBtn.style.marginLeft = 'auto';
+    editBtn.textContent = '⚙️ EDIT DAY';
+    editBtn.onclick = () => openDayEditor(currentDayIdx);
+    bar.appendChild(editBtn);
+  }
+}
+
+function renderGames() {
+  const container = document.getElementById('games-container');
+  container.innerHTML = '';
+  
+  const ev = db[currentEventId];
+  const day = ev?.days?.[currentDayIdx];
+  
+  document.getElementById('day-title-display').textContent = day ? (day.name.toUpperCase() + ' GAMES') : 'GAMES';
+
+  if (!day || !day.games) return;
+
+  day.games.forEach((game, gameIdx) => {
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    if (game.isBreak) card.style.opacity = '0.6';
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'game-header title-text';
+    
+    const title = document.createElement('div');
+    title.className = 'game-title';
+    title.textContent = `${game.time} — ${game.name}`;
+
+    const meta = document.createElement('div');
+    meta.className = 'game-meta';
+    if (game.isBreak) meta.innerHTML += `<span class="tag">BREAK</span>`;
+    if (game.modifier) meta.innerHTML += `<span class="tag accent">${game.modifier}</span>`;
+    if (game.scores && game.scorestype) meta.innerHTML += `<span class="tag">${game.scorestype}</span>`;
+    if (game.mid) meta.innerHTML += `<span class="tag" style="background:var(--text);color:var(--bg)">MID: ${game.mid}</span>`;
+
+    hdr.appendChild(title);
+    hdr.appendChild(meta);
+    card.appendChild(hdr);
+
+    // Body
+    const body = document.createElement('div');
+    body.className = 'game-body';
+
+    if (game.delegates && game.delegates.length > 0) {
+      body.innerHTML += `<p style="font-size:0.85rem; color:var(--gray);"><b>DELEGATES:</b> ${game.delegates.join(', ')}</p>`;
+    }
+
+    // Versus Score Editor
+    if (!game.isBreak && game.scores && game.scorestype === 'versus' && game.scoring) {
+      const vsWrap = document.createElement('div');
+      vsWrap.style.marginTop = '10px';
+      
+      const inputs = [];
+      game.scoring.forEach((match, rowIdx) => {
+        const row = document.createElement('div');
+        row.className = 'match-row';
+        
+        row.innerHTML = `
+          <div class="team-name">${match.teamA || 'TEAM A'}</div>
+          <input type="number" class="score-input" value="${match.scoreA || 0}" min="0">
+          <div class="vs-divider">VS</div>
+          <input type="number" class="score-input" value="${match.scoreB || 0}" min="0">
+          <div class="team-name" style="text-align:right;">${match.teamB || 'TEAM B'}</div>
+        `;
+        vsWrap.appendChild(row);
+        inputs.push({ inA: row.children[1], inB: row.children[3], rowIdx });
+      });
+
+      const broadcastBtn = document.createElement('button');
+      broadcastBtn.className = 'btn btn-primary';
+      broadcastBtn.style.marginTop = '8px';
+      broadcastBtn.textContent = 'BROADCAST SCORES 📡';
+      broadcastBtn.onclick = () => broadcastScores(game.mid, inputs, broadcastBtn);
+      vsWrap.appendChild(broadcastBtn);
+      
+      body.appendChild(vsWrap);
+    } else if (game.scores && game.scorestype === 'roundrobin') {
+      body.innerHTML += `<p style="font-size:0.85rem; font-style:italic; color:var(--accent);">Round Robin — Interactive on Viewer Side.</p>`;
+    }
+
+    // Controls
+    const controls = document.createElement('div');
+    controls.className = 'game-controls';
+    
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-outline';
+    editBtn.style.fontSize = '0.75rem';
+    editBtn.textContent = 'EDIT CONFIG';
+    editBtn.onclick = () => openGameEditor(gameIdx);
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger';
+    delBtn.style.fontSize = '0.75rem';
+    delBtn.textContent = 'DELETE';
+    delBtn.onclick = () => {
+      if(confirm(`Delete game ${game.name}?`)) {
+        day.games.splice(gameIdx, 1);
+        refreshUI();
+      }
+    };
+
+    controls.appendChild(editBtn);
+    controls.appendChild(delBtn);
+    body.appendChild(controls);
+
+    card.appendChild(body);
+    container.appendChild(card);
+  });
+}
+
+// ── Score Broadcasting ──
+function broadcastScores(mid, inputs, btn) {
+  if (!mid) { alert("Missing MID for this game."); return; }
+  const promises = inputs.map(pair => {
+    return fetch('/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mid: mid,
+        row_idx: pair.rowIdx,
+        score_a: parseInt(pair.inA.value, 10) || 0,
+        score_b: parseInt(pair.inB.value, 10) || 0
+      })
+    }).then(r => r.json());
+  });
+
+  Promise.all(promises).then(() => {
+    btn.style.background = 'var(--success)';
+    btn.textContent = 'BROADCASTED ✓';
+    // Update local DB to reflect changes without a full fetch
+    const g = db[currentEventId].days[currentDayIdx].games.find(x => x.mid === mid);
+    if(g) {
+      inputs.forEach(pair => {
+        g.scoring[pair.rowIdx].scoreA = parseInt(pair.inA.value, 10) || 0;
+        g.scoring[pair.rowIdx].scoreB = parseInt(pair.inB.value, 10) || 0;
+      });
+    }
+    setTimeout(() => { btn.style.background = ''; btn.textContent = 'BROADCAST SCORES 📡'; }, 2000);
+  }).catch(() => {
+    btn.style.background = '#FF3A00';
+    btn.textContent = 'ERROR';
+    setTimeout(() => { btn.style.background = ''; btn.textContent = 'BROADCAST SCORES 📡'; }, 2000);
+  });
+}
+
+document.getElementById('btn-add-game').addEventListener('click', () => openGameEditor(-1));
+
+// ── Modals / Forms ──
+const modalOverlay = document.getElementById('editor-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+let onModalSave = null;
+
+document.getElementById('modal-cancel').onclick = closeModal;
+document.getElementById('modal-save').onclick = () => { if(onModalSave) onModalSave(); };
+
+function openModal(title, html, saveCallback) {
+  modalTitle.textContent = title;
+  modalBody.innerHTML = html;
+  onModalSave = saveCallback;
+  modalOverlay.classList.add('open');
+}
+function closeModal() {
+  modalOverlay.classList.remove('open');
+}
+
+// Event Editor
+function openEventEditor(idOrEvent = null) {
+  const isEdit = typeof idOrEvent === 'string';
+  const ev = isEdit ? db[idOrEvent] : { name: '', base: 'house', startdate: '', enddate: '', days: [] };
+  const html = `
+    ${!isEdit ? `<div class="form-group"><label>Event ID (e.g. intramurals2)</label><input type="text" id="f-ev-id"></div>` : ''}
+    <div class="form-group"><label>Name</label><input type="text" id="f-ev-name" value="${ev.name}"></div>
+    <div class="form-group"><label>Base</label>
+      <select id="f-ev-base">
+        <option value="house" ${ev.base==='house'?'selected':''}>House Based</option>
+        <option value="grade" ${ev.base==='grade'?'selected':''}>Grade Based</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Start Date</label><input type="text" id="f-ev-start" value="${ev.startdate}"></div>
+    <div class="form-group"><label>End Date</label><input type="text" id="f-ev-end" value="${ev.enddate}"></div>
+  `;
+  openModal(isEdit ? 'EDIT EVENT' : 'NEW EVENT', html, () => {
+    const id = isEdit ? idOrEvent : document.getElementById('f-ev-id').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!id) return alert('ID required');
+    if (!db[id]) db[id] = { days: [] };
+    db[id].name = document.getElementById('f-ev-name').value;
+    db[id].base = document.getElementById('f-ev-base').value;
+    db[id].startdate = document.getElementById('f-ev-start').value;
+    db[id].enddate = document.getElementById('f-ev-end').value;
+    if (!isEdit) currentEventId = id;
+    closeModal();
+    refreshUI();
+  });
+}
+
+// Day Editor
+function openDayEditor(idxOrNull = null) {
+  const isEdit = typeof idxOrNull === 'number';
+  const ev = db[currentEventId];
+  const day = isEdit ? ev.days[idxOrNull] : { name: '', date: '', starttime: '', endtime: '', games: [] };
+  const html = `
+    <div class="form-group"><label>Day Name (e.g. Day 1)</label><input type="text" id="f-day-name" value="${day.name}"></div>
+    <div class="form-group"><label>Date (e.g. May 4, 2026)</label><input type="text" id="f-day-date" value="${day.date}"></div>
+    <div class="form-group"><label>Start Time</label><input type="text" id="f-day-start" value="${day.starttime}"></div>
+    <div class="form-group"><label>End Time</label><input type="text" id="f-day-end" value="${day.endtime}"></div>
+  `;
+  openModal(isEdit ? 'EDIT DAY' : 'NEW DAY', html, () => {
+    const newDay = {
+      name: document.getElementById('f-day-name').value,
+      date: document.getElementById('f-day-date').value,
+      starttime: document.getElementById('f-day-start').value,
+      endtime: document.getElementById('f-day-end').value,
+      games: isEdit ? day.games : []
+    };
+    if (isEdit) ev.days[idxOrNull] = newDay;
+    else { ev.days.push(newDay); currentDayIdx = ev.days.length - 1; }
+    closeModal();
+    refreshUI();
+  });
+}
+
+// Game Editor
+function openGameEditor(idx = -1) {
+  const isEdit = idx >= 0;
+  const day = db[currentEventId].days[currentDayIdx];
+  const game = isEdit ? day.games[idx] : { 
+    name: '', modifier: '', time: '', delegates: [], isBreak: false, 
+    scores: false, scorestype: 'versus', mid: '', scoring: [] 
+  };
+
+  const html = `
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+      <div class="form-group"><label>Game Name</label><input type="text" id="f-g-name" value="${game.name}"></div>
+      <div class="form-group"><label>Time (e.g. 9:00AM)</label><input type="text" id="f-g-time" value="${game.time}"></div>
+    </div>
+    <div class="form-group"><label>Modifier (e.g. junior, senior)</label><input type="text" id="f-g-mod" value="${game.modifier || ''}"></div>
+    <div class="form-group"><label>Delegates (comma separated)</label><input type="text" id="f-g-del" value="${(game.delegates||[]).join(', ')}"></div>
+    
+    <div style="display:flex; gap: 16px; margin: 16px 0;">
+      <label style="display:flex; align-items:center; gap:6px; font-weight:800; cursor:pointer;">
+        <input type="checkbox" id="f-g-break" ${game.isBreak ? 'checked' : ''}> IS BREAK
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; font-weight:800; cursor:pointer;">
+        <input type="checkbox" id="f-g-scores" ${game.scores ? 'checked' : ''}> HAS SCORES
+      </label>
+    </div>
+
+    <div id="score-config-panel" style="display: ${game.scores ? 'block' : 'none'}; border: 2px dashed var(--border); padding: 12px; border-radius: 6px;">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group"><label>Match ID (MID)</label><input type="text" id="f-g-mid" value="${game.mid || ''}"></div>
+        <div class="form-group"><label>Score Type</label>
+          <select id="f-g-type">
+            <option value="versus" ${game.scorestype==='versus'?'selected':''}>Versus</option>
+            <option value="roundrobin" ${game.scorestype==='roundrobin'?'selected':''}>Round Robin</option>
+          </select>
+        </div>
+      </div>
+      <div id="versus-teams-panel" style="display: ${game.scorestype==='versus' ? 'block' : 'none'}; margin-top: 10px;">
+        <label style="font-weight:800; font-size:0.8rem; color:var(--gray); margin-bottom:6px; display:block;">VERSUS MATCHUPS</label>
+        <div id="matchups-container"></div>
+        <button class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px; margin-top:6px;" id="btn-add-matchup">+ ADD ROW</button>
+      </div>
+    </div>
+  `;
+
+  openModal(isEdit ? 'EDIT GAME' : 'NEW GAME', html, () => {
+    const newGame = {
+      name: document.getElementById('f-g-name').value,
+      time: document.getElementById('f-g-time').value,
+      modifier: document.getElementById('f-g-mod').value,
+      delegates: document.getElementById('f-g-del').value.split(',').map(s=>s.trim()).filter(s=>s),
+      isBreak: document.getElementById('f-g-break').checked,
+      scores: document.getElementById('f-g-scores').checked,
+      scorestype: document.getElementById('f-g-type').value,
+      mid: document.getElementById('f-g-mid').value,
+      scoring: []
+    };
+
+    if (newGame.scores && newGame.scorestype === 'versus') {
+      const rows = document.querySelectorAll('.matchup-editor-row');
+      rows.forEach(row => {
+        const tA = row.children[0].value;
+        const tB = row.children[2].value;
+        if (tA || tB) newGame.scoring.push({ teamA: tA, scoreA: 0, teamB: tB, scoreB: 0 });
+      });
+      // Keep existing scores if editing and teams match
+      if (isEdit && game.scoring) {
+        newGame.scoring.forEach((newM, i) => {
+          if (game.scoring[i]) {
+            newM.scoreA = game.scoring[i].scoreA;
+            newM.scoreB = game.scoring[i].scoreB;
+          }
+        });
+      }
+    }
+
+    if (isEdit) day.games[idx] = newGame;
+    else day.games.push(newGame);
+    
+    closeModal();
+    refreshUI();
+  });
+
+  // Dynamic logic within the modal
+  const breakCb = document.getElementById('f-g-break');
+  const scoresCb = document.getElementById('f-g-scores');
+  const scorePanel = document.getElementById('score-config-panel');
+  const typeSel = document.getElementById('f-g-type');
+  const vsPanel = document.getElementById('versus-teams-panel');
+  const matchContainer = document.getElementById('matchups-container');
+  const addMatchBtn = document.getElementById('btn-add-matchup');
+
+  scoresCb.onchange = () => scorePanel.style.display = scoresCb.checked ? 'block' : 'none';
+  typeSel.onchange = () => vsPanel.style.display = typeSel.value === 'versus' ? 'block' : 'none';
+
+  function createMatchRow(tA = '', tB = '') {
+    const div = document.createElement('div');
+    div.className = 'matchup-editor-row';
+    div.innerHTML = `
+      <input type="text" placeholder="Team A" value="${tA}">
+      <span style="font-weight:900;font-style:italic;color:var(--gray)">VS</span>
+      <input type="text" placeholder="Team B" value="${tB}">
+      <button class="btn btn-danger" style="padding:4px 8px" onclick="this.parentElement.remove()">X</button>
+    `;
+    matchContainer.appendChild(div);
+  }
+
+  if (game.scoring && game.scoring.length > 0) {
+    game.scoring.forEach(m => createMatchRow(m.teamA, m.teamB));
+  } else {
+    createMatchRow(); // one default row
+  }
+
+  addMatchBtn.onclick = () => createMatchRow();
+}
+
+// ── Boot ──
+loadData();
+connectWS();
+
+</script>
+</body>
+</html>

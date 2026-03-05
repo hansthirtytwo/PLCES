@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLCES: Schedule</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img src="PLCES.png" id="logo">
+    <div class="schedule" id="schedule"></div>
+
+    <!-- Modal -->
+    <div id="game-modal" class="modal" aria-hidden="true">
+        <div class="modal-backdrop" data-action="close"></div>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-header">
+                <div class="modal-header-titles">
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <div class="modal-subtitle"></div>
+                </div>
+                <button class="modal-close" aria-label="Close" data-action="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-meta">
+                <div class="modal-est">
+                    <div class="modal-est-label">EST</div>
+                    <div class="modal-est-time"></div>
+                </div>
+                <div class="modal-delegates">
+                    <div class="modal-delegates-label">DELEGATES</div>
+                    <div class="modal-delegates-names"></div>
+                </div>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="plces.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
