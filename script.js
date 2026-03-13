@@ -76,7 +76,7 @@ function renderEventList() {
 
     var a = document.createElement('a');
     a.className = 'event';
-    a.href = id + '.html';
+    a.href = 'intramurals.html?event=' + id;
 
     var h1 = document.createElement('h1');
     h1.className = 'title';
@@ -113,7 +113,8 @@ function renderDayList() {
   var container = document.getElementById('day-list');
   if (!container || !window.PLCES) return;
 
-  var eventId = container.dataset.event || 'intramurals';
+  var p = getParams();
+  var eventId = p.event || container.dataset.event || Object.keys(window.PLCES)[0];
   var ev = window.PLCES[eventId];
   if (!ev) return;
 
@@ -279,7 +280,7 @@ function initModal() {
       if (game.scorestype === 'versus') {
         buildVersus(body, game.scoring, game.mid);
       } else if (game.scorestype === 'roundrobin') {
-        buildRoundRobin(body, game.mid);
+        buildRoundRobin(body, game.mid, game.scoring);
       }
     }
 
@@ -389,84 +390,67 @@ function buildVersus(container, scoring, mid) {
 }
 
 
-// ─── ROUND ROBIN: interactive 2-panel picker ─────────
-// Each panel = 2×2 clickable quadrant buttons.
-// Gray (default) → orange (selected) → yellow (champion).
-function buildRoundRobin(container, mid) {
+// ─── ROUND ROBIN: matchup list ───────────────────────
+// scoring = [{teamA, scoreA, teamB, scoreB}, ...]
+// null/undefined scores = pending (shows —)
+// winner cell = yellow, loser = gray
+function buildRoundRobin(container, mid, scoring) {
   if (!container || container.querySelector('.rr-container')) return;
-
-  var QUADS = [
-    { color: 'BLUE',  pos: 'tl', score: 5 },
-    { color: 'GREEN', pos: 'tr', score: 4 },
-    { color: 'RED',   pos: 'bl', score: 3 },
-    { color: 'BLACK', pos: 'br', score: 1 }
-  ];
-  var GRAY   = '#c8c8c8';
-  var ORANGE = '#FF6A2A';
-  var YELLOW = '#FFD400';
-  var DARK   = 'rgba(0,0,0,0.65)';
-  var LITE   = 'rgba(255,255,255,0.9)';
+  if (!scoring || scoring.length === 0) return;
 
   var rr = document.createElement('div');
   rr.className = 'rr-container';
 
-  var row = document.createElement('div');
-  row.className = 'rr-row';
+  scoring.forEach(function(match) {
+    var pending = (match.scoreA == null || match.scoreB == null || match.scoreA === '' || match.scoreB === '');
+    var aWins   = !pending && Number(match.scoreA) > Number(match.scoreB);
+    var bWins   = !pending && Number(match.scoreB) > Number(match.scoreA);
 
-  var selections = [null, null];
-  var quadEls    = [[], []];
-  var scoreNums  = [null, null];
+    var row = document.createElement('div');
+    row.className = 'rr-matchup';
 
-  function style(btn, bg, color) {
-    btn.style.background = bg;
-    btn.style.color = color;
-  }
+    // Team A
+    var teamA = document.createElement('div');
+    teamA.className = 'rr-team' + (aWins ? ' winner' : '');
+    teamA.textContent = (match.teamA || '').toUpperCase();
 
-  function createPanel(idx) {
-    var panel = document.createElement('div');
-    panel.className = 'rr-panel';
+    // Score A
+    var scoreA = document.createElement('div');
+    if (pending) {
+      scoreA.className = 'rr-score-cell pending';
+      scoreA.textContent = '—';
+    } else {
+      scoreA.className = 'rr-score-cell' + (aWins ? ' winner-score' : ' loser-score');
+      scoreA.textContent = match.scoreA;
+    }
 
-    QUADS.forEach(function(q) {
-      var btn = document.createElement('button');
-      btn.className = 'rr-quad';
-      btn.dataset.color = q.color;
-      btn.dataset.pos   = q.pos;
-      btn.textContent   = q.color;
-      style(btn, GRAY, LITE);
+    // Colon
+    var colon = document.createElement('div');
+    colon.className = 'rr-colon';
+    colon.textContent = ':';
 
-      btn.addEventListener('click', function() {
-        quadEls[idx].forEach(function(b) {
-          b.classList.remove('champion');
-          style(b, GRAY, LITE);
-        });
-        style(btn, ORANGE, LITE);
-        selections[idx] = q;
-        updateDisplay();
-      });
+    // Score B
+    var scoreB = document.createElement('div');
+    if (pending) {
+      scoreB.className = 'rr-score-cell pending';
+      scoreB.textContent = '—';
+    } else {
+      scoreB.className = 'rr-score-cell' + (bWins ? ' winner-score' : ' loser-score');
+      scoreB.textContent = match.scoreB;
+    }
 
-      panel.appendChild(btn);
-      quadEls[idx].push(btn);
-    });
+    // Team B
+    var teamB = document.createElement('div');
+    teamB.className = 'rr-team' + (bWins ? ' winner' : '');
+    teamB.textContent = (match.teamB || '').toUpperCase();
 
-    var overlay = document.createElement('div');
-    overlay.className = 'rr-score-overlay';
-    var num = document.createElement('div');
-    num.className = 'rr-score-num';
-    overlay.appendChild(num);
-    panel.appendChild(overlay);
-    scoreNums[idx] = num;
-
-    return panel;
-  }
-
-  var vsCol = document.createElement('div');
-  vsCol.className = 'rr-vs-col';
-  vsCol.innerHTML = '<div class="rr-vs-text">VS</div>';
-
-  row.appendChild(createPanel(0));
-  row.appendChild(vsCol);
-  row.appendChild(createPanel(1));
-  rr.appendChild(row);
+    row.appendChild(teamA);
+    row.appendChild(scoreA);
+    row.appendChild(colon);
+    row.appendChild(scoreB);
+    row.appendChild(teamB);
+    rr.appendChild(row);
+  });
 
   var footer = document.createElement('div');
   footer.className = 'rr-footer';
@@ -474,41 +458,6 @@ function buildRoundRobin(container, mid) {
   rr.appendChild(footer);
 
   container.appendChild(rr);
-
-  function updateDisplay() {
-    var a = selections[0];
-    var b = selections[1];
-
-    scoreNums.forEach(function(n) { n.classList.remove('visible'); });
-    if (!a || !b) return;
-
-    scoreNums[0].textContent = a.score;
-    scoreNums[1].textContent = b.score;
-    scoreNums[0].classList.add('visible');
-    scoreNums[1].classList.add('visible');
-
-    // Reset all quads to their default color
-    quadEls.flat().forEach(function(btn) {
-      btn.classList.remove('champion');
-      var pIdx = quadEls[0].includes(btn) ? 0 : 1;
-      var sel  = selections[pIdx];
-      style(btn,
-        (sel && sel.color === btn.dataset.color) ? ORANGE : GRAY,
-        LITE
-      );
-    });
-
-    // Crown the winner
-    if (a.score !== b.score) {
-      var wIdx   = a.score > b.score ? 0 : 1;
-      var wColor = selections[wIdx].color;
-      var wBtn   = quadEls[wIdx].find(function(b) { return b.dataset.color === wColor; });
-      if (wBtn) {
-        wBtn.classList.add('champion');
-        style(wBtn, YELLOW, DARK);
-      }
-    }
-  }
 }
 
 
@@ -535,9 +484,11 @@ function initLiveUpdates() {
         var msg = JSON.parse(ev.data);
         if (msg.type === 'score_update') handleScoreUpdate(msg);
         if (msg.type === 'data_update' && msg.data) {
-          window.PLCES = msg.data;
-          // Rebuild midMap for MID search on data updates
+          var d = msg.data;
+          delete d._updated_at;
+          window.PLCES = d;
           if (window._midSearchRebuild) window._midSearchRebuild();
+          renderPage();
         }
       } catch(e) {}
     };
@@ -597,14 +548,51 @@ function pulseLiveDot(card) {
 }
 
 
+// ─── RENDER CURRENT PAGE ─────────────────────────────────
+// Call this whenever window.PLCES changes (initial load or WS push).
+function renderPage() {
+  // Clear containers so re-renders don't duplicate
+  var el;
+  el = document.getElementById('event-list'); if (el) el.innerHTML = '';
+  el = document.getElementById('day-list');   if (el) el.innerHTML = '';
+  el = document.getElementById('schedule');   if (el) el.innerHTML = '';
+
+  if (document.getElementById('event-list')) renderEventList();
+  if (document.getElementById('day-list'))   renderDayList();
+  if (document.getElementById('schedule'))   renderSchedule();
+}
+
 // ─── BOOT ────────────────────────────────────────────────
 function boot() {
   initLogo();
   initWatermark();
-  if (document.getElementById('event-list')) renderEventList();
-  if (document.getElementById('day-list'))   renderDayList();
-  if (document.getElementById('schedule'))   renderSchedule();
-  initLiveUpdates();
+
+  // Try server first; fall back to static window.PLCES from plces.js
+  if (location.protocol !== 'file:') {
+    fetch('/api/data')
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (res.data && Object.keys(res.data).length) {
+          // Strip internal meta key
+          var d = res.data;
+          delete d._updated_at;
+          window.PLCES = d;
+        }
+        renderPage();
+        initLiveUpdates();
+        initMidSearch();
+      })
+      .catch(function() {
+        // Server not running — use static plces.js
+        renderPage();
+        initLiveUpdates();
+        initMidSearch();
+      });
+  } else {
+    // Static file:// mode — use plces.js directly
+    renderPage();
+    initMidSearch();
+  }
 }
 
 if (document.readyState === 'loading') {
@@ -720,18 +708,11 @@ function initMidSearch() {
 
     if (game.scores) {
       if (game.scorestype === 'versus') buildVersus(body, game.scoring, game.mid);
-      else if (game.scorestype === 'roundrobin') buildRoundRobin(body, game.mid);
+      else if (game.scorestype === 'roundrobin') buildRoundRobin(body, game.mid, game.scoring);
     }
 
     modal._token = (modal._token || 0) + 1;
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
   }
-}
-
-// Run MID search init on boot (appended to existing boot)
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMidSearch);
-} else {
-  initMidSearch();
 }

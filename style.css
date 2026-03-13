@@ -266,118 +266,86 @@ h1,h2,h3,h4,h5,h6,p {
     }
 }
 
-/* ── Round-robin: 2×2 grid panel layout ── */
+/* ── Round-robin: matchup list ── */
 .rr-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
     font-family: 'Inter', sans-serif;
-    color: #111;
     width: 100%;
 }
 
-/* Row: [panel] [vs] [panel] */
-.rr-row {
+.rr-matchup {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(12px, 3vw, 32px);
-    width: 100%;
-}
-
-/* Each team panel — tall rectangle like the concept */
-.rr-panel {
-    position: relative;
-    flex: 1 1 0;
-    max-width: 260px;
-    aspect-ratio: 3 / 4;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    align-items: stretch;
+    min-height: 52px;
     border-radius: 4px;
     overflow: hidden;
-    cursor: pointer;
 }
 
-/* Each quadrant */
-.rr-quad {
-    position: relative;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    background: #c8c8c8; /* default gray */
-    transition: background 200ms ease;
+/* Team name cells */
+.rr-team {
     display: flex;
-    padding: 8px 10px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.55rem, 1.8vw, 0.85rem);
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 90px;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(0.75rem, 3vw, 0.95rem);
     text-transform: uppercase;
-    font-style: italic;
     letter-spacing: 0.04em;
+    padding: 10px 8px;
+    background: #c8c8c8;
     color: rgba(255,255,255,0.9);
+    transition: background 220ms;
+    text-align: center;
+    line-height: 1.2;
+}
+.rr-team.winner {
+    background: #FFD400;
+    color: rgba(0,0,0,0.7);
 }
 
-/* Label corner alignment per quadrant position */
-.rr-quad[data-pos="tl"] { align-items: flex-start; justify-content: flex-start; }
-.rr-quad[data-pos="tr"] { align-items: flex-start; justify-content: flex-end;   }
-.rr-quad[data-pos="bl"] { align-items: flex-end;   justify-content: flex-start; }
-.rr-quad[data-pos="br"] { align-items: flex-end;   justify-content: flex-end;   }
-
-.rr-quad:hover { filter: brightness(1.12); }
-
-.rr-quad.champion {
-    background: #FFD400 !important;
-    color: rgba(0,0,0,0.75) !important;
-}
-
-/* Big score — overlaid in the center of the panel */
-.rr-score-overlay {
-    position: absolute;
-    inset: 0;
+/* Score cells */
+.rr-score-cell {
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.rr-score-num {
-    font-size: clamp(3rem, 8vw, 6rem);
+    flex: 0 0 54px;
     font-weight: 900;
     font-style: italic;
-    color: rgba(255,255,255,0.95);
+    font-size: clamp(1.6rem, 6vw, 2.4rem);
     line-height: 1;
-    opacity: 0;
-    transform: scale(0.75);
-    transition: opacity 240ms ease, transform 240ms cubic-bezier(.2,.9,.3,1);
-    pointer-events: none;
-    user-select: none;
+    background: #e8e8e8;
+    color: #333;
+    transition: background 220ms, color 220ms;
+    letter-spacing: -0.02em;
+}
+.rr-score-cell.winner-score {
+    background: #FFD400;
+    color: rgba(0,0,0,0.75);
+}
+.rr-score-cell.loser-score {
+    background: #d8d8d8;
+    color: rgba(0,0,0,0.4);
+}
+.rr-score-cell.pending {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    color: #bbb;
 }
 
-.rr-score-num.visible {
-    opacity: 1;
-    transform: scale(1);
-}
-
-@media (max-width: 480px) {
-    .rr-score-num { font-size: clamp(2.2rem, 13vw, 4rem); }
-}
-
-/* VS column between panels */
-.rr-vs-col {
-    flex-shrink: 0;
+/* Colon divider */
+.rr-colon {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.rr-vs-text {
+    flex: 0 0 20px;
     font-weight: 900;
     font-style: italic;
-    color: #888;
-    font-size: clamp(1rem, 3vw, 1.6rem);
-    letter-spacing: 0.04em;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    background: #e0e0e0;
+    color: #999;
+    padding: 0;
 }
 
 /* Footer: MID label */
@@ -385,14 +353,14 @@ h1,h2,h3,h4,h5,h6,p {
     font-style: italic;
     font-weight: 600;
     color: #888;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    padding: 0 2px;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+    padding: 6px 2px 0;
 }
 
 @media (max-width: 480px) {
-    .rr-panel { max-width: 42vw; }
-    .rr-quad  { font-size: 0.6rem; padding: 5px 6px; }
-    .rr-score-num { font-size: clamp(2.5rem, 11vw, 4rem); }
+    .rr-team       { flex: 0 0 72px; font-size: 0.72rem; }
+    .rr-score-cell { flex: 0 0 42px; font-size: 1.4rem; }
+    .rr-colon      { flex: 0 0 16px; }
 }
 
 

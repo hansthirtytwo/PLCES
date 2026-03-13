@@ -201,6 +201,25 @@
         ]
       },
       {
+        "name": "Day 3",
+        "date": "",
+        "starttime": "8:00AM",
+        "endtime": "4:30PM",
+        "games": [
+          {
+            "name": "up in flames",
+            "modifier": "",
+            "time": "",
+            "delegates": [],
+            "isBreak": false,
+            "scores": false,
+            "scorestype": "roundrobin",
+            "mid": "",
+            "scoring": []
+          }
+        ]
+      },
+      {
         "name": "Day 2",
         "date": "May 5, 2026",
         "starttime": "8:00AM",
@@ -319,5 +338,5 @@
       }
     ]
   },
-  "_updated_at": "2026-03-05T10:06:09.491Z"
+  "_updated_at": "2026-03-06T09:26:55.443Z"
 }

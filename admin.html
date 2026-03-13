@@ -1,749 +1,1533 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLCES Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <style>
-    /* ── Theme Variables ── */
-    :root {
-      --bg: #f5f5f5;
-      --text: #111;
-      --card-bg: #fff;
-      --border: #e0e0e0;
-      --accent: #FF3A00;
-      --accent-hover: #e63500;
-      --gray: #888;
-      --gray-light: #f0f0f0;
-      --input-bg: #f9f9f9;
-      --success: #27AE60;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLCES Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   CSS VARIABLES — light / dark
+══════════════════════════════════════════ */
+:root {
+  --bg:       #f5f5f5;
+  --surface:  #ffffff;
+  --surface2: #f0f0f0;
+  --surface3: #e4e4e4;
+  --border:   #e0e0e0;
+  --text:     #111111;
+  --text2:    #555555;
+  --text3:    #999999;
+  --accent:   #FF3A00;
+  --orange:   #FF6A2A;
+  --green:    #27AE60;
+  --blue:     #1E90FF;
+  --sidebar-w: 260px;
+  --top-h:    54px;
+}
+[data-theme="dark"] {
+  --bg:       #0e0e0e;
+  --surface:  #1a1a1a;
+  --surface2: #242424;
+  --surface3: #2e2e2e;
+  --border:   #333333;
+  --text:     #f0f0f0;
+  --text2:    #aaaaaa;
+  --text3:    #666666;
+}
 
-    [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --text: #ffffff;
-      --card-bg: #1a1a1a;
-      --border: #333333;
-      --gray-light: #2a2a2a;
-      --input-bg: #111111;
-    }
+/* ══════════════════════════════════════════
+   RESET + BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+h1,h2,h3,h4,p { margin: 0; padding: 0; }
 
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 0;
-      transition: background 0.3s, color 0.3s;
-    }
-    h1,h2,h3,h4,p { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background 200ms, color 200ms;
+}
 
-    /* ── Typography & UI Styles matching Main App ── */
-    .title-text {
-      font-weight: 900;
-      font-style: italic;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+input, select, textarea, button {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+}
 
-    .btn {
-      font-family: 'Inter', sans-serif;
-      font-weight: 900;
-      font-style: italic;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 16px;
-      transition: all 150ms ease;
-    }
-    .btn-primary { background: var(--text); color: var(--bg); }
-    .btn-primary:hover { background: var(--accent); color: white; transform: translateY(-2px); }
-    .btn-accent { background: var(--accent); color: white; }
-    .btn-accent:hover { background: var(--accent-hover); transform: translateY(-2px); }
-    .btn-danger { background: transparent; color: #FF3A00; border: 2px solid #FF3A00; }
-    .btn-danger:hover { background: #FF3A00; color: white; }
-    .btn-outline { background: transparent; color: var(--text); border: 2px solid var(--border); }
-    .btn-outline:hover { border-color: var(--text); }
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--top-h);
+  background: var(--text);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 12px;
+  z-index: 200;
+  border-bottom: 2px solid var(--accent);
+}
 
-    input, select {
-      font-family: 'Inter', sans-serif;
-      background: var(--input-bg);
-      color: var(--text);
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      outline: none;
-    }
-    input:focus, select:focus { border-color: var(--accent); }
+.topbar-brand {
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+.topbar-brand span { color: var(--accent); }
 
-    /* ── Top bar ── */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--text);
-      color: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 24px;
-      gap: 16px;
-    }
-    .topbar-title { font-size: 1.5rem; }
-    .topbar-title span { color: var(--accent); }
-    
-    .topbar-controls { display: flex; align-items: center; gap: 16px; }
-    .status { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-    .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray); }
-    .status-dot.live { background: var(--success); box-shadow: 0 0 0 3px rgba(39,174,96,.25); }
-    .status-dot.error { background: #FF3A00; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
 
-    /* ── Nav Bars (Events & Days) ── */
-    .nav-bar {
-      display: flex;
-      gap: 10px;
-      background: var(--card-bg);
-      border-bottom: 2px solid var(--border);
-      overflow-x: auto;
-      padding: 12px 24px;
-      align-items: center;
-    }
-    .nav-label { font-weight: 800; font-size: 0.8rem; color: var(--gray); text-transform: uppercase; margin-right: 10px; }
-    
-    .nav-tab {
-      padding: 8px 16px;
-      font-weight: 800;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: 2px solid transparent;
-      background: var(--gray-light);
-      color: var(--gray);
-      border-radius: 4px;
-      white-space: nowrap;
-      transition: all 150ms;
-    }
-    .nav-tab.active { background: var(--text); color: var(--bg); }
-    .nav-tab:hover:not(.active) { border-color: var(--gray); color: var(--text); }
+/* Status pill */
+.ws-status {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; opacity: 0.75;
+}
+.ws-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #666; transition: background 300ms;
+}
+.ws-dot.live  { background: var(--green); box-shadow: 0 0 0 3px rgba(39,174,96,.3); }
+.ws-dot.error { background: var(--accent); }
 
-    /* ── Main content ── */
-    .content {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 24px 16px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+/* Dark mode toggle */
+.theme-toggle {
+  background: var(--surface3);
+  border: none; cursor: pointer;
+  width: 36px; height: 20px;
+  border-radius: 10px;
+  position: relative;
+  transition: background 200ms;
+  flex-shrink: 0;
+}
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: var(--text);
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: transform 200ms, background 200ms;
+}
+[data-theme="dark"] .theme-toggle::after { transform: translateX(16px); }
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
+/* Top action buttons */
+.top-btn {
+  padding: 6px 14px;
+  font-weight: 700; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  border: none; border-radius: 4px; cursor: pointer;
+  transition: opacity 120ms, transform 80ms;
+  white-space: nowrap;
+}
+.top-btn:hover  { opacity: 0.85; }
+.top-btn:active { transform: scale(0.96); }
+.top-btn.primary { background: var(--accent); color: white; }
+.top-btn.ghost   { background: rgba(255,255,255,.12); color: var(--bg); }
+.top-btn.success { background: var(--green) !important; }
+.top-btn.fail    { background: #c0392b !important; }
 
-    /* ── Game card ── */
-    .game-card {
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .game-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-      background: var(--gray-light);
-      gap: 12px;
-    }
-    .game-title { font-size: 1.2rem; flex: 1; }
-    .game-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
-    
-    .tag {
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-      padding: 4px 8px; border-radius: 3px; background: var(--border); color: var(--text);
-    }
-    .tag.accent { background: var(--accent); color: white; }
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: var(--top-h); left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
 
-    .game-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
-    
-    .game-controls {
-      display: flex; gap: 8px; margin-top: 10px;
-      padding-top: 12px; border-top: 1px dashed var(--border);
-    }
+/* Main */
+.main {
+  margin-top: var(--top-h);
+  margin-left: var(--sidebar-w);
+  min-height: calc(100vh - var(--top-h));
+  padding: 24px 24px 80px;
+  max-width: 860px;
+}
 
-    /* ── Versus editor ── */
-    .match-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .team-name { font-weight: 800; font-size: 0.85rem; width: 80px; text-transform: uppercase; }
-    .score-input {
-      width: 70px; padding: 8px; font-size: 1.3rem; font-weight: 900; 
-      font-style: italic; text-align: center;
-    }
-    .vs-divider { font-weight: 800; font-style: italic; color: var(--gray); }
+/* ══════════════════════════════════════════
+   SIDEBAR COMPONENTS
+══════════════════════════════════════════ */
+.sb-section {
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+}
 
-    /* ── Modals ── */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      display: flex; justify-content: center; align-items: center;
-      opacity: 0; pointer-events: none; transition: opacity 200ms; z-index: 1000;
-      backdrop-filter: blur(4px);
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: auto; }
-    .modal-content {
-      background: var(--card-bg); border-radius: 8px; width: 100%; max-width: 500px;
-      max-height: 90vh; overflow-y: auto; padding: 24px;
-      transform: translateY(20px); transition: transform 200ms;
-      border: 2px solid var(--border); box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-    .modal-overlay.open .modal-content { transform: translateY(0); }
-    
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-    .form-group label { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; color: var(--gray); }
-    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.sb-label {
+  font-size: 0.65rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--text3);
+  padding: 14px 16px 6px;
+}
 
-    /* Matchup Editor inside Game Modal */
-    .matchup-editor-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
-    .matchup-editor-row input { flex: 1; }
-  </style>
+.sb-event-card {
+  padding: 10px 14px;
+  background: var(--surface2);
+  margin: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.sb-event-name {
+  font-weight: 900; font-style: italic;
+  font-size: 1rem; text-transform: uppercase;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.sb-event-meta {
+  font-size: 0.72rem; color: var(--text3);
+  margin-top: 2px;
+}
+
+.sb-day-list { padding: 4px 0 8px; }
+
+.sb-day {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 7px 16px;
+  cursor: pointer;
+  font-weight: 700; font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text2);
+  border-left: 3px solid transparent;
+  transition: background 120ms, color 120ms, border-color 120ms;
+}
+.sb-day:hover { background: var(--surface2); color: var(--text); }
+.sb-day.active {
+  background: var(--surface2);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+.sb-day-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 120ms; }
+.sb-day:hover .sb-day-actions { opacity: 1; }
+
+.sb-add-btn {
+  margin: 4px 8px 8px;
+  width: calc(100% - 16px);
+  padding: 7px;
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: 5px;
+  color: var(--text3);
+  font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 120ms, color 120ms, border-color 120ms;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.sb-add-btn:hover {
+  background: var(--surface2);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ══════════════════════════════════════════
+   MAIN AREA — DAY HEADER
+══════════════════════════════════════════ */
+.day-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.day-header-full { grid-column: 1 / -1; }
+
+.field-label {
+  font-size: 0.65rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text3); margin-bottom: 5px;
+}
+
+.field-input {
+  width: 100%; padding: 9px 11px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 5px; color: var(--text);
+  font-size: 0.85rem; font-weight: 600;
+  outline: none;
+  transition: border-color 150ms, background 150ms;
+}
+.field-input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+.field-input.title-input {
+  font-style: italic; font-weight: 900; font-size: 1.05rem;
+  text-transform: uppercase;
+}
+
+select.field-input { cursor: pointer; }
+
+/* ══════════════════════════════════════════
+   SECTION HEADING (Games, Breaks)
+══════════════════════════════════════════ */
+.section-heading {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 24px 0 10px;
+}
+.section-title {
+  font-size: 0.68rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--text3);
+}
+.add-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 4px; color: var(--text2);
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 120ms, color 120ms, background 120ms;
+}
+.add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--surface2); }
+.add-btn.break { border-style: dashed; }
+
+/* ══════════════════════════════════════════
+   GAME CARD
+══════════════════════════════════════════ */
+.game-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 200ms;
+}
+.game-card:hover { border-color: var(--text3); }
+.game-card.is-break { border-style: solid; border-color: #444; }
+.game-card.is-break .card-bar { background: #333; }
+
+.card-bar {
+  display: flex; align-items: center;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-bar-title {
+  font-weight: 900; font-style: italic;
+  font-size: 0.95rem; text-transform: uppercase;
+  flex: 1; color: var(--text);
+  min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.card-bar.is-break .card-bar-title { color: white; }
+.card-time {
+  font-size: 0.72rem; font-weight: 700; color: var(--text3);
+  flex-shrink: 0;
+}
+.card-bar.is-break .card-time { color: rgba(255,255,255,0.6); }
+
+/* Tags on card bar */
+.ctag {
+  font-size: 0.62rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 2px 7px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.ctag.junior  { background: #e8f4fd; color: #1E90FF; }
+.ctag.senior  { background: #fdeee8; color: #FF6A2A; }
+.ctag.versus  { background: var(--text); color: var(--bg); }
+.ctag.rrobin  { background: #27AE60; color: white; }
+.ctag.mid     { background: var(--surface3); color: var(--text3); font-style: italic; }
+.ctag.brk     { background: #555; color: white; }
+
+/* Card icon buttons */
+.icon-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--text3); padding: 3px 5px;
+  border-radius: 3px; font-size: 1rem; line-height: 1;
+  transition: color 120ms, background 120ms;
+  flex-shrink: 0;
+}
+.icon-btn:hover { color: var(--text); background: var(--surface3); }
+.icon-btn.del:hover { color: var(--accent); }
+.icon-btn.arrow { font-size: 0.8rem; }
+
+/* Expand chevron */
+.card-chevron {
+  font-size: 0.7rem; color: var(--text3); flex-shrink: 0;
+  transition: transform 200ms;
+}
+.card-chevron.open { transform: rotate(180deg); }
+
+/* Card body */
+.card-body {
+  display: none;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  flex-direction: column;
+  gap: 14px;
+}
+.card-body.open { display: flex; }
+
+/* Form grid inside card */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+.form-group { display: flex; flex-direction: column; }
+
+/* Toggle switch */
+.toggle-row {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.toggle-label {
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--text2);
+}
+.toggle-wrap {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+}
+.toggle {
+  width: 38px; height: 22px; border-radius: 11px;
+  background: var(--surface3); border: none; cursor: pointer;
+  position: relative; flex-shrink: 0; transition: background 200ms;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px; background: var(--text2);
+  border-radius: 50%; top: 3px; left: 3px;
+  transition: transform 200ms, background 200ms;
+}
+.toggle.on { background: var(--accent); }
+.toggle.on::after { transform: translateX(16px); background: white; }
+.toggle-text { font-size: 0.75rem; font-weight: 700; color: var(--text2); }
+
+/* Delegate tags */
+.delegates-wrap {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  padding: 8px 10px;
+  background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 5px; min-height: 40px;
+  cursor: text;
+}
+.delegates-wrap:focus-within { border-color: var(--accent); background: var(--surface); }
+.delegate-tag {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--surface3); border-radius: 4px;
+  padding: 3px 8px; font-size: 0.78rem; font-weight: 600; color: var(--text);
+}
+.delegate-tag button {
+  background: none; border: none; cursor: pointer;
+  color: var(--text3); font-size: 0.9rem; line-height: 1; padding: 0;
+}
+.delegate-tag button:hover { color: var(--accent); }
+.delegate-input {
+  border: none; background: none; outline: none;
+  font-size: 0.78rem; font-weight: 600; color: var(--text);
+  flex: 1; min-width: 120px; padding: 2px 0;
+}
+.delegate-input::placeholder { color: var(--text3); font-weight: 400; }
+
+/* Score type selector */
+.scoretype-picker {
+  display: flex; gap: 6px;
+}
+.scoretype-opt {
+  flex: 1; padding: 8px 6px;
+  background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: 5px; text-align: center;
+  font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text2); cursor: pointer;
+  transition: border-color 150ms, color 150ms, background 150ms;
+}
+.scoretype-opt.active {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--surface);
+}
+
+/* Scoring rows */
+.scoring-table { display: flex; flex-direction: column; gap: 6px; }
+.scoring-row {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border-radius: 5px;
+  padding: 8px 10px;
+}
+.sr-num {
+  font-size: 0.65rem; font-weight: 800; color: var(--text3);
+  width: 18px; flex-shrink: 0; text-align: center;
+}
+.sr-input {
+  flex: 1; padding: 6px 8px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 4px; color: var(--text); outline: none;
+  font-weight: 700; font-size: 0.82rem; text-transform: uppercase;
+  transition: border-color 150ms;
+}
+.sr-input:focus { border-color: var(--accent); }
+.sr-score {
+  width: 60px; text-align: center; font-style: italic; font-weight: 900;
+  font-size: 1rem;
+}
+.sr-vs {
+  font-size: 0.7rem; font-weight: 800; color: var(--text3);
+  flex-shrink: 0;
+}
+.scoring-add {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px; background: none;
+  border: 1.5px dashed var(--border); border-radius: 5px;
+  color: var(--text3); font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  cursor: pointer; transition: border-color 120ms, color 120ms;
+  width: 100%;
+}
+.scoring-add:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Broadcast bar */
+.broadcast-bar {
+  position: fixed; bottom: 0; left: var(--sidebar-w); right: 0;
+  background: var(--surface);
+  border-top: 1.5px solid var(--border);
+  padding: 12px 24px;
+  display: flex; align-items: center; gap: 12px;
+  z-index: 150;
+}
+.bc-dirty {
+  font-size: 0.72rem; font-weight: 700; color: var(--text3);
+  flex: 1;
+}
+.bc-dirty.unsaved { color: var(--orange); }
+.broadcast-btn {
+  padding: 10px 24px;
+  background: var(--accent); color: white;
+  border: none; border-radius: 5px; cursor: pointer;
+  font-weight: 900; font-size: 0.78rem; font-style: italic;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  transition: background 150ms, transform 80ms;
+}
+.broadcast-btn:hover  { background: #d62f00; }
+.broadcast-btn:active { transform: scale(0.97); }
+.broadcast-btn.success { background: var(--green); }
+.broadcast-btn.fail    { background: #c0392b; }
+
+/* ══════════════════════════════════════════
+   EVENT EDITOR (modal-like overlay)
+══════════════════════════════════════════ */
+.event-editor {
+  padding: 10px 8px 4px;
+}
+.event-editor .form-row { margin-bottom: 8px; }
+
+/* ══════════════════════════════════════════
+   EMPTY STATE
+══════════════════════════════════════════ */
+.empty-state {
+  text-align: center; padding: 60px 20px;
+  color: var(--text3); font-style: italic; font-size: 0.9rem;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — collapse sidebar on small screens
+══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  :root { --sidebar-w: 0px; }
+  .sidebar { display: none; }
+  .main, .broadcast-bar { margin-left: 0; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
 </head>
 <body>
 
+<!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div class="topbar-title title-text">PLCES <span>ADMIN</span></div>
-  <div class="topbar-controls">
-    <div class="status">
-      <div class="status-dot" id="status-dot"></div>
-      <span id="status-text">CONNECTING</span>
+  <div class="topbar-brand">PLCES <span>ADMIN</span></div>
+  <div class="topbar-actions">
+    <div class="ws-status">
+      <div class="ws-dot" id="ws-dot"></div>
+      <span id="ws-label">connecting</span>
     </div>
-    <button class="btn btn-outline" style="color:var(--bg); border-color:var(--gray);" id="theme-btn">🌙</button>
-    <button class="btn btn-accent" id="btn-save-all">SAVE TO SERVER</button>
+    <button class="theme-toggle" id="theme-btn" title="Toggle dark mode"></button>
+    <button class="top-btn ghost" id="reload-btn">↺ Reload</button>
+    <button class="top-btn primary" id="save-btn">▲ Save & Broadcast</button>
   </div>
 </div>
 
-<div class="nav-bar" id="events-bar">
-  </div>
+<!-- ══ SIDEBAR ══ -->
+<div class="sidebar" id="sidebar"></div>
 
-<div class="nav-bar" id="days-bar">
-  </div>
-
-<div class="content">
-  <div class="section-header">
-    <h2 class="title-text" style="font-size: 2rem;" id="day-title-display">GAMES</h2>
-    <button class="btn btn-primary" id="btn-add-game">+ ADD GAME</button>
-  </div>
-  <div id="games-container">
-    </div>
+<!-- ══ MAIN ══ -->
+<div class="main" id="main">
+  <div class="empty-state" id="empty">Loading data…</div>
 </div>
 
-<div class="modal-overlay" id="editor-modal">
-  <div class="modal-content">
-    <h2 class="title-text" id="modal-title" style="margin-bottom: 20px; font-size: 1.8rem;">EDIT</h2>
-    <div id="modal-body"></div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" id="modal-cancel">CANCEL</button>
-      <button class="btn btn-primary" id="modal-save">CONFIRM</button>
-    </div>
-  </div>
+<!-- ══ BROADCAST BAR ══ -->
+<div class="broadcast-bar">
+  <div class="bc-dirty" id="dirty-label">All changes saved</div>
+  <button class="broadcast-btn" id="bc-btn">Save & Broadcast</button>
 </div>
 
 <script>
-// ── State ──
-let db = {};
-let currentEventId = null;
-let currentDayIdx = 0;
-let ws = null;
-let isDark = localStorage.getItem('plces_admin_theme') === 'dark';
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+var state        = null;   // full PLCES data object
+var isDirty      = false;
+var activeEvent  = null;
+var activeDayIdx = 0;
+var ws           = null;
 
-// ── Theme ──
-function applyTheme() {
-  if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
-  else document.documentElement.removeAttribute('data-theme');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
-}
-document.getElementById('theme-btn').addEventListener('click', () => {
-  isDark = !isDark;
-  localStorage.setItem('plces_admin_theme', isDark ? 'dark' : 'light');
-  applyTheme();
+// ══════════════════════════════════════════════════════
+//  DARK MODE
+// ══════════════════════════════════════════════════════
+var html = document.documentElement;
+var savedTheme = localStorage.getItem('plces-theme') || 'light';
+html.setAttribute('data-theme', savedTheme);
+
+document.getElementById('theme-btn').addEventListener('click', function() {
+  var t = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', t);
+  localStorage.setItem('plces-theme', t);
 });
-applyTheme();
 
-// ── WebSocket & Data Fetching ──
+// ══════════════════════════════════════════════════════
+//  WEBSOCKET
+// ══════════════════════════════════════════════════════
 function connectWS() {
-  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  ws = new WebSocket(proto + '//' + location.host + '/ws');
-  ws.onopen = () => setStatus('live', 'LIVE');
-  ws.onclose = () => { setStatus('error', 'DISCONNECTED'); setTimeout(connectWS, 3000); };
-  ws.onerror = () => setStatus('error', 'ERROR');
-  ws.onmessage = (ev) => {
-    try {
-      const msg = JSON.parse(ev.data);
-      if (msg.type === 'data_update' && msg.data && Object.keys(db).length === 0) {
-        db = msg.data;
-        refreshUI();
-      }
-    } catch(e) {}
-  };
+  var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  try {
+    ws = new WebSocket(proto + '//' + location.host + '/ws');
+    ws.onopen    = function() { setWSStatus('live', 'live'); };
+    ws.onclose   = function() { setWSStatus('error', 'disconnected'); setTimeout(connectWS, 3000); };
+    ws.onerror   = function() { setWSStatus('error', 'error'); };
+    ws.onmessage = function(ev) {
+      try {
+        var msg = JSON.parse(ev.data);
+        // Only accept external data_update when we have no local state yet
+        if (msg.type === 'data_update' && msg.data && !state) {
+          state = stripMeta(msg.data);
+          renderAll();
+        }
+      } catch(e) {}
+    };
+  } catch(e) {}
 }
 
-function setStatus(state, text) {
-  const dot = document.getElementById('status-dot');
-  const span = document.getElementById('status-text');
-  dot.className = 'status-dot ' + state;
-  span.textContent = text;
+function setWSStatus(cls, text) {
+  var dot  = document.getElementById('ws-dot');
+  var lbl  = document.getElementById('ws-label');
+  dot.className = 'ws-dot ' + cls;
+  lbl.textContent = text;
 }
 
+// ══════════════════════════════════════════════════════
+//  DATA LOAD / SAVE
+// ══════════════════════════════════════════════════════
 function loadData() {
-  fetch('/api/data').then(r => r.json()).then(res => {
-    db = res.data || {};
-    refreshUI();
-  }).catch(() => setStatus('error', 'FETCH ERROR'));
+  fetch('/api/data')
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+      state = stripMeta(res.data || {});
+      isDirty = false;
+      renderAll();
+    })
+    .catch(function() { setWSStatus('error', 'fetch error'); });
 }
 
-function saveToServer() {
-  const btn = document.getElementById('btn-save-all');
-  btn.textContent = 'SAVING...';
+function stripMeta(d) {
+  var c = JSON.parse(JSON.stringify(d));
+  delete c._updated_at;
+  return c;
+}
+
+function markDirty() {
+  isDirty = true;
+  var lbl = document.getElementById('dirty-label');
+  lbl.textContent = 'Unsaved changes — remember to broadcast!';
+  lbl.className = 'bc-dirty unsaved';
+}
+
+function markClean() {
+  isDirty = false;
+  var lbl = document.getElementById('dirty-label');
+  lbl.textContent = 'All changes saved ✓';
+  lbl.className = 'bc-dirty';
+}
+
+function saveAndBroadcast(btn) {
+  if (!state) return;
+  btn.textContent = 'Saving…';
+  btn.disabled = true;
   fetch('/api/data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: db })
-  }).then(r => r.json()).then(() => {
-    btn.textContent = 'SAVED ✓';
-    btn.style.background = 'var(--success)';
-    setTimeout(() => { btn.textContent = 'SAVE TO SERVER'; btn.style.background = ''; }, 2000);
-  }).catch(() => {
-    btn.textContent = 'ERROR!';
-    setTimeout(() => { btn.textContent = 'SAVE TO SERVER'; }, 2000);
+    body: JSON.stringify({ data: state })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function() {
+    btn.classList.add('success');
+    btn.textContent = 'Saved ✓';
+    markClean();
+    setTimeout(function() {
+      btn.classList.remove('success');
+      btn.textContent = btn.id === 'save-btn' ? '▲ Save & Broadcast' : 'Save & Broadcast';
+      btn.disabled = false;
+    }, 2000);
+  })
+  .catch(function() {
+    btn.classList.add('fail');
+    btn.textContent = 'Error — Retry';
+    setTimeout(function() {
+      btn.classList.remove('fail');
+      btn.textContent = btn.id === 'save-btn' ? '▲ Save & Broadcast' : 'Save & Broadcast';
+      btn.disabled = false;
+    }, 2500);
   });
 }
 
-document.getElementById('btn-save-all').addEventListener('click', saveToServer);
+document.getElementById('save-btn').addEventListener('click', function() {
+  saveAndBroadcast(this);
+});
+document.getElementById('bc-btn').addEventListener('click', function() {
+  saveAndBroadcast(this);
+});
+document.getElementById('reload-btn').addEventListener('click', function() {
+  if (isDirty && !confirm('You have unsaved changes. Reload from server?')) return;
+  state = null;
+  loadData();
+});
 
-// ── Rendering ──
-function refreshUI() {
-  if (!db || Object.keys(db).length === 0) return;
-  if (!currentEventId || !db[currentEventId]) {
-    currentEventId = Object.keys(db)[0];
-    currentDayIdx = 0;
+// ══════════════════════════════════════════════════════
+//  RENDER ALL
+// ══════════════════════════════════════════════════════
+function renderAll() {
+  if (!state) return;
+  var keys = Object.keys(state);
+  if (keys.length === 0) {
+    // No events yet — show prompt
+    document.getElementById('main').innerHTML =
+      '<div class="empty-state">No events yet. Add one below.</div>';
+    renderSidebar();
+    return;
   }
-  if (db[currentEventId] && !db[currentEventId].days[currentDayIdx]) {
-    currentDayIdx = 0;
-  }
-  
-  renderEventsBar();
-  renderDaysBar();
-  renderGames();
+  if (!activeEvent || !state[activeEvent]) activeEvent = keys[0];
+  renderSidebar();
+  renderDay();
 }
 
-function renderEventsBar() {
-  const bar = document.getElementById('events-bar');
-  bar.innerHTML = '<span class="nav-label">Event</span>';
-  
-  Object.keys(db).forEach(id => {
-    const ev = db[id];
-    const btn = document.createElement('button');
-    btn.className = `nav-tab ${id === currentEventId ? 'active' : ''}`;
-    btn.textContent = ev.name || id;
-    btn.onclick = () => { currentEventId = id; currentDayIdx = 0; refreshUI(); };
-    bar.appendChild(btn);
-  });
+// ══════════════════════════════════════════════════════
+//  SIDEBAR
+// ══════════════════════════════════════════════════════
+function renderSidebar() {
+  var sb = document.getElementById('sidebar');
+  sb.innerHTML = '';
 
-  const addBtn = document.createElement('button');
-  addBtn.className = 'nav-tab';
-  addBtn.textContent = '+ ADD EVENT';
-  addBtn.onclick = openEventEditor;
-  bar.appendChild(addBtn);
+  // ── Events ──
+  Object.entries(state).forEach(function(entry) {
+    var evId = entry[0];
+    var ev   = entry[1];
 
-  if (currentEventId) {
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn btn-outline';
-    editBtn.style.padding = '4px 8px';
-    editBtn.style.marginLeft = 'auto';
-    editBtn.textContent = '⚙️ EDIT EVENT';
-    editBtn.onclick = () => openEventEditor(currentEventId);
-    bar.appendChild(editBtn);
-  }
-}
+    var sec = el('div', 'sb-section');
+    var lbl = el('div', 'sb-label');
+    lbl.textContent = 'EVENT';
+    sec.appendChild(lbl);
 
-function renderDaysBar() {
-  const bar = document.getElementById('days-bar');
-  bar.innerHTML = '<span class="nav-label">Day</span>';
-  
-  const ev = db[currentEventId];
-  if (!ev) return;
+    // Event editor card
+    var eCard = el('div', 'sb-event-card');
 
-  (ev.days || []).forEach((day, i) => {
-    const btn = document.createElement('button');
-    btn.className = `nav-tab ${i === currentDayIdx ? 'active' : ''}`;
-    btn.textContent = day.name || `Day ${i+1}`;
-    btn.onclick = () => { currentDayIdx = i; refreshUI(); };
-    bar.appendChild(btn);
-  });
+    var nameRow = el('div', 'sb-event-name');
+    var nameSpan = el('span');
+    nameSpan.textContent = up(ev.name || evId);
+    var delEvBtn = iconBtn('✕', 'del', function() {
+      if (!confirm('Delete event "' + (ev.name||evId) + '" and all its days?')) return;
+      delete state[evId];
+      if (activeEvent === evId) activeEvent = Object.keys(state)[0] || null;
+      markDirty(); renderAll();
+    });
+    nameRow.appendChild(nameSpan);
+    nameRow.appendChild(delEvBtn);
+    eCard.appendChild(nameRow);
 
-  const addBtn = document.createElement('button');
-  addBtn.className = 'nav-tab';
-  addBtn.textContent = '+ ADD DAY';
-  addBtn.onclick = openDayEditor;
-  bar.appendChild(addBtn);
+    var meta = el('div', 'sb-event-meta');
+    meta.textContent = baseLabel(ev.base) + ' · ' + (ev.startdate || '') + (ev.enddate ? ' → ' + ev.enddate : '');
+    eCard.appendChild(meta);
 
-  if (ev.days && ev.days[currentDayIdx]) {
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn btn-outline';
-    editBtn.style.padding = '4px 8px';
-    editBtn.style.marginLeft = 'auto';
-    editBtn.textContent = '⚙️ EDIT DAY';
-    editBtn.onclick = () => openDayEditor(currentDayIdx);
-    bar.appendChild(editBtn);
-  }
-}
+    // Inline event editor fields
+    var editor = el('div', 'event-editor');
 
-function renderGames() {
-  const container = document.getElementById('games-container');
-  container.innerHTML = '';
-  
-  const ev = db[currentEventId];
-  const day = ev?.days?.[currentDayIdx];
-  
-  document.getElementById('day-title-display').textContent = day ? (day.name.toUpperCase() + ' GAMES') : 'GAMES';
+    // Name
+    var g1 = formGroup('Name');
+    var inp1 = fieldInput(ev.name || '', 'text', true);
+    inp1.addEventListener('input', function() {
+      state[evId].name = inp1.value;
+      nameSpan.textContent = up(inp1.value || evId);
+      meta.textContent = baseLabel(state[evId].base) + ' · ' + (state[evId].startdate||'') + (state[evId].enddate ? ' → '+state[evId].enddate : '');
+      markDirty();
+    });
+    g1.appendChild(inp1); editor.appendChild(g1);
 
-  if (!day || !day.games) return;
+    // Base + dates row
+    var row1 = el('div', 'form-row');
+    var g2 = formGroup('Type');
+    var sel = document.createElement('select');
+    sel.className = 'field-input';
+    ['house','grade'].forEach(function(v) {
+      var o = document.createElement('option');
+      o.value = v; o.textContent = baseLabel(v);
+      if (ev.base === v) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', function() { state[evId].base = sel.value; meta.textContent = baseLabel(sel.value) + ' · ' + (state[evId].startdate||'') + (state[evId].enddate ? ' → '+state[evId].enddate : ''); markDirty(); });
+    g2.appendChild(sel); row1.appendChild(g2);
 
-  day.games.forEach((game, gameIdx) => {
-    const card = document.createElement('div');
-    card.className = 'game-card';
-    if (game.isBreak) card.style.opacity = '0.6';
+    var g3 = formGroup('Start date');
+    var inp3 = fieldInput(ev.startdate || '', 'text');
+    inp3.placeholder = 'May 4, 2026';
+    inp3.addEventListener('input', function() { state[evId].startdate = inp3.value; markDirty(); });
+    g3.appendChild(inp3); row1.appendChild(g3);
 
-    // Header
-    const hdr = document.createElement('div');
-    hdr.className = 'game-header title-text';
-    
-    const title = document.createElement('div');
-    title.className = 'game-title';
-    title.textContent = `${game.time} — ${game.name}`;
+    var g4 = formGroup('End date');
+    var inp4 = fieldInput(ev.enddate || '', 'text');
+    inp4.placeholder = 'Optional';
+    inp4.addEventListener('input', function() { state[evId].enddate = inp4.value || ''; markDirty(); });
+    g4.appendChild(inp4); row1.appendChild(g4);
 
-    const meta = document.createElement('div');
-    meta.className = 'game-meta';
-    if (game.isBreak) meta.innerHTML += `<span class="tag">BREAK</span>`;
-    if (game.modifier) meta.innerHTML += `<span class="tag accent">${game.modifier}</span>`;
-    if (game.scores && game.scorestype) meta.innerHTML += `<span class="tag">${game.scorestype}</span>`;
-    if (game.mid) meta.innerHTML += `<span class="tag" style="background:var(--text);color:var(--bg)">MID: ${game.mid}</span>`;
+    editor.appendChild(row1);
+    eCard.appendChild(editor);
+    sec.appendChild(eCard);
 
-    hdr.appendChild(title);
-    hdr.appendChild(meta);
-    card.appendChild(hdr);
+    // Day list
+    var dayList = el('div', 'sb-day-list');
+    (ev.days || []).forEach(function(day, i) {
+      dayList.appendChild(buildSbDay(evId, ev, day, i));
+    });
+    sec.appendChild(dayList);
 
-    // Body
-    const body = document.createElement('div');
-    body.className = 'game-body';
-
-    if (game.delegates && game.delegates.length > 0) {
-      body.innerHTML += `<p style="font-size:0.85rem; color:var(--gray);"><b>DELEGATES:</b> ${game.delegates.join(', ')}</p>`;
-    }
-
-    // Versus Score Editor
-    if (!game.isBreak && game.scores && game.scorestype === 'versus' && game.scoring) {
-      const vsWrap = document.createElement('div');
-      vsWrap.style.marginTop = '10px';
-      
-      const inputs = [];
-      game.scoring.forEach((match, rowIdx) => {
-        const row = document.createElement('div');
-        row.className = 'match-row';
-        
-        row.innerHTML = `
-          <div class="team-name">${match.teamA || 'TEAM A'}</div>
-          <input type="number" class="score-input" value="${match.scoreA || 0}" min="0">
-          <div class="vs-divider">VS</div>
-          <input type="number" class="score-input" value="${match.scoreB || 0}" min="0">
-          <div class="team-name" style="text-align:right;">${match.teamB || 'TEAM B'}</div>
-        `;
-        vsWrap.appendChild(row);
-        inputs.push({ inA: row.children[1], inB: row.children[3], rowIdx });
+    // Add day button
+    var addDayBtn = el('button', 'sb-add-btn');
+    addDayBtn.innerHTML = '+ Add Day';
+    addDayBtn.addEventListener('click', function() {
+      var n = (ev.days || []).length + 1;
+      if (!ev.days) ev.days = [];
+      ev.days.push({
+        name: 'Day ' + n, date: '', starttime: '8:00AM', endtime: '4:30PM', games: []
       });
+      activeDayIdx = ev.days.length - 1;
+      markDirty(); renderAll();
+    });
+    sec.appendChild(addDayBtn);
+    sb.appendChild(sec);
+  });
 
-      const broadcastBtn = document.createElement('button');
-      broadcastBtn.className = 'btn btn-primary';
-      broadcastBtn.style.marginTop = '8px';
-      broadcastBtn.textContent = 'BROADCAST SCORES 📡';
-      broadcastBtn.onclick = () => broadcastScores(game.mid, inputs, broadcastBtn);
-      vsWrap.appendChild(broadcastBtn);
-      
-      body.appendChild(vsWrap);
-    } else if (game.scores && game.scorestype === 'roundrobin') {
-      body.innerHTML += `<p style="font-size:0.85rem; font-style:italic; color:var(--accent);">Round Robin — Interactive on Viewer Side.</p>`;
-    }
+  // Add event button
+  var addEvBtn = el('button', 'sb-add-btn');
+  addEvBtn.innerHTML = '+ Add Event';
+  addEvBtn.style.margin = '8px';
+  addEvBtn.addEventListener('click', function() {
+    var id = 'event' + Date.now();
+    state[id] = { name: 'New Event', base: 'house', startdate: '', enddate: '', days: [] };
+    activeEvent = id;
+    activeDayIdx = 0;
+    markDirty(); renderAll();
+  });
+  sb.appendChild(addEvBtn);
+}
 
-    // Controls
-    const controls = document.createElement('div');
-    controls.className = 'game-controls';
-    
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn btn-outline';
-    editBtn.style.fontSize = '0.75rem';
-    editBtn.textContent = 'EDIT CONFIG';
-    editBtn.onclick = () => openGameEditor(gameIdx);
+function buildSbDay(evId, ev, day, i) {
+  var div = el('div', 'sb-day' + (evId === activeEvent && i === activeDayIdx ? ' active' : ''));
+  var nameSpan = el('span');
+  nameSpan.textContent = up(day.name || 'Day ' + (i+1));
+  nameSpan.style.flex = '1';
 
-    const delBtn = document.createElement('button');
-    delBtn.className = 'btn btn-danger';
-    delBtn.style.fontSize = '0.75rem';
-    delBtn.textContent = 'DELETE';
-    delBtn.onclick = () => {
-      if(confirm(`Delete game ${game.name}?`)) {
-        day.games.splice(gameIdx, 1);
-        refreshUI();
+  var actions = el('div', 'sb-day-actions');
+
+  var upBtn = iconBtn('↑', 'arrow', function(e) {
+    e.stopPropagation();
+    if (i === 0) return;
+    var arr = ev.days;
+    var tmp = arr[i]; arr[i] = arr[i-1]; arr[i-1] = tmp;
+    if (activeDayIdx === i) activeDayIdx = i-1;
+    else if (activeDayIdx === i-1) activeDayIdx = i;
+    markDirty(); renderAll();
+  });
+  var dnBtn = iconBtn('↓', 'arrow', function(e) {
+    e.stopPropagation();
+    var arr = ev.days;
+    if (i >= arr.length-1) return;
+    var tmp = arr[i]; arr[i] = arr[i+1]; arr[i+1] = tmp;
+    if (activeDayIdx === i) activeDayIdx = i+1;
+    else if (activeDayIdx === i+1) activeDayIdx = i;
+    markDirty(); renderAll();
+  });
+  var delBtn = iconBtn('✕', 'del', function(e) {
+    e.stopPropagation();
+    if (!confirm('Delete "' + (day.name||'Day') + '"?')) return;
+    ev.days.splice(i, 1);
+    if (activeDayIdx >= ev.days.length) activeDayIdx = Math.max(0, ev.days.length-1);
+    markDirty(); renderAll();
+  });
+
+  actions.appendChild(upBtn);
+  actions.appendChild(dnBtn);
+  actions.appendChild(delBtn);
+  div.appendChild(nameSpan);
+  div.appendChild(actions);
+
+  div.addEventListener('click', function() {
+    activeEvent = evId;
+    activeDayIdx = i;
+    renderAll();
+  });
+  return div;
+}
+
+// ══════════════════════════════════════════════════════
+//  MAIN — DAY EDITOR
+// ══════════════════════════════════════════════════════
+function renderDay() {
+  var main = document.getElementById('main');
+  main.innerHTML = '';
+
+  var ev  = state[activeEvent];
+  if (!ev) { main.innerHTML = '<div class="empty-state">Select an event.</div>'; return; }
+  var day = (ev.days || [])[activeDayIdx];
+  if (!day) { main.innerHTML = '<div class="empty-state">No days yet. Add one in the sidebar.</div>'; return; }
+  if (!day.games) day.games = [];
+
+  // ── Day header ──
+  var hdr = el('div', 'day-header');
+
+  // Name (full width)
+  var gName = formGroup('Day Name');
+  var inpName = fieldInput(day.name || '', 'text', true);
+  inpName.placeholder = 'Day 1';
+  inpName.addEventListener('input', function() {
+    day.name = inpName.value;
+    markDirty(); renderSidebar();
+  });
+  gName.className += ' day-header-full';
+  gName.appendChild(inpName); hdr.appendChild(gName);
+
+  // Date, start, end
+  [
+    { lbl: 'Date',       key: 'date',      ph: 'May 4, 2026' },
+    { lbl: 'Start Time', key: 'starttime', ph: '8:00AM'      },
+    { lbl: 'End Time',   key: 'endtime',   ph: '4:30PM'      }
+  ].forEach(function(f) {
+    var g = formGroup(f.lbl);
+    var inp = fieldInput(day[f.key] || '', 'text');
+    inp.placeholder = f.ph;
+    inp.addEventListener('input', function() { day[f.key] = inp.value; markDirty(); });
+    g.appendChild(inp); hdr.appendChild(g);
+  });
+
+  main.appendChild(hdr);
+
+  // ── Games list ──
+  var secHdr = el('div', 'section-heading');
+  var secTitle = el('div', 'section-title');
+  secTitle.textContent = 'Games & Breaks — ' + day.games.length + ' items';
+  secHdr.appendChild(secTitle);
+
+  // Add buttons
+  var addWrap = el('div');
+  addWrap.style.display = 'flex'; addWrap.style.gap = '6px';
+
+  var addGameBtn = el('button', 'add-btn');
+  addGameBtn.textContent = '+ Game';
+  addGameBtn.addEventListener('click', function() {
+    day.games.push({
+      name:'New Game', modifier:'', time:'',
+      delegates:[], isBreak:false,
+      scores:false, scorestype:'versus', mid:'', scoring:[]
+    });
+    markDirty(); renderDay();
+    // auto-open last card
+    setTimeout(function() {
+      var cards = document.querySelectorAll('.card-body');
+      if (cards.length) {
+        var last = cards[cards.length-1];
+        last.classList.add('open');
+        var chev = last.previousElementSibling.querySelector('.card-chevron');
+        if (chev) chev.classList.add('open');
       }
-    };
+    }, 50);
+  });
 
-    controls.appendChild(editBtn);
-    controls.appendChild(delBtn);
-    body.appendChild(controls);
+  var addBrkBtn = el('button', 'add-btn break');
+  addBrkBtn.textContent = '+ Break';
+  addBrkBtn.addEventListener('click', function() {
+    day.games.push({ name:'Break', modifier:'', time:'', isBreak:true, scores:false });
+    markDirty(); renderDay();
+  });
 
-    card.appendChild(body);
-    container.appendChild(card);
+  addWrap.appendChild(addGameBtn);
+  addWrap.appendChild(addBrkBtn);
+  secHdr.appendChild(addWrap);
+  main.appendChild(secHdr);
+
+  // Game cards
+  day.games.forEach(function(game, gi) {
+    main.appendChild(buildGameCard(day, game, gi));
   });
 }
 
-// ── Score Broadcasting ──
-function broadcastScores(mid, inputs, btn) {
-  if (!mid) { alert("Missing MID for this game."); return; }
-  const promises = inputs.map(pair => {
-    return fetch('/api/scores', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        mid: mid,
-        row_idx: pair.rowIdx,
-        score_a: parseInt(pair.inA.value, 10) || 0,
-        score_b: parseInt(pair.inB.value, 10) || 0
-      })
-    }).then(r => r.json());
-  });
+// ══════════════════════════════════════════════════════
+//  GAME CARD BUILDER
+// ══════════════════════════════════════════════════════
+function buildGameCard(day, game, gi) {
+  var card = el('div', 'game-card' + (game.isBreak ? ' is-break' : ''));
 
-  Promise.all(promises).then(() => {
-    btn.style.background = 'var(--success)';
-    btn.textContent = 'BROADCASTED ✓';
-    // Update local DB to reflect changes without a full fetch
-    const g = db[currentEventId].days[currentDayIdx].games.find(x => x.mid === mid);
-    if(g) {
-      inputs.forEach(pair => {
-        g.scoring[pair.rowIdx].scoreA = parseInt(pair.inA.value, 10) || 0;
-        g.scoring[pair.rowIdx].scoreB = parseInt(pair.inB.value, 10) || 0;
-      });
-    }
-    setTimeout(() => { btn.style.background = ''; btn.textContent = 'BROADCAST SCORES 📡'; }, 2000);
-  }).catch(() => {
-    btn.style.background = '#FF3A00';
-    btn.textContent = 'ERROR';
-    setTimeout(() => { btn.style.background = ''; btn.textContent = 'BROADCAST SCORES 📡'; }, 2000);
-  });
-}
+  // ── Bar ──
+  var bar = el('div', 'card-bar' + (game.isBreak ? ' is-break' : ''));
+  bar.style.cursor = 'pointer';
 
-document.getElementById('btn-add-game').addEventListener('click', () => openGameEditor(-1));
+  var titleSpan = el('div', 'card-bar-title');
+  titleSpan.textContent = up(game.name || '');
+  var timeSpan = el('div', 'card-time');
+  timeSpan.textContent = game.time || '';
 
-// ── Modals / Forms ──
-const modalOverlay = document.getElementById('editor-modal');
-const modalTitle = document.getElementById('modal-title');
-const modalBody = document.getElementById('modal-body');
-let onModalSave = null;
-
-document.getElementById('modal-cancel').onclick = closeModal;
-document.getElementById('modal-save').onclick = () => { if(onModalSave) onModalSave(); };
-
-function openModal(title, html, saveCallback) {
-  modalTitle.textContent = title;
-  modalBody.innerHTML = html;
-  onModalSave = saveCallback;
-  modalOverlay.classList.add('open');
-}
-function closeModal() {
-  modalOverlay.classList.remove('open');
-}
-
-// Event Editor
-function openEventEditor(idOrEvent = null) {
-  const isEdit = typeof idOrEvent === 'string';
-  const ev = isEdit ? db[idOrEvent] : { name: '', base: 'house', startdate: '', enddate: '', days: [] };
-  const html = `
-    ${!isEdit ? `<div class="form-group"><label>Event ID (e.g. intramurals2)</label><input type="text" id="f-ev-id"></div>` : ''}
-    <div class="form-group"><label>Name</label><input type="text" id="f-ev-name" value="${ev.name}"></div>
-    <div class="form-group"><label>Base</label>
-      <select id="f-ev-base">
-        <option value="house" ${ev.base==='house'?'selected':''}>House Based</option>
-        <option value="grade" ${ev.base==='grade'?'selected':''}>Grade Based</option>
-      </select>
-    </div>
-    <div class="form-group"><label>Start Date</label><input type="text" id="f-ev-start" value="${ev.startdate}"></div>
-    <div class="form-group"><label>End Date</label><input type="text" id="f-ev-end" value="${ev.enddate}"></div>
-  `;
-  openModal(isEdit ? 'EDIT EVENT' : 'NEW EVENT', html, () => {
-    const id = isEdit ? idOrEvent : document.getElementById('f-ev-id').value.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-    if (!id) return alert('ID required');
-    if (!db[id]) db[id] = { days: [] };
-    db[id].name = document.getElementById('f-ev-name').value;
-    db[id].base = document.getElementById('f-ev-base').value;
-    db[id].startdate = document.getElementById('f-ev-start').value;
-    db[id].enddate = document.getElementById('f-ev-end').value;
-    if (!isEdit) currentEventId = id;
-    closeModal();
-    refreshUI();
-  });
-}
-
-// Day Editor
-function openDayEditor(idxOrNull = null) {
-  const isEdit = typeof idxOrNull === 'number';
-  const ev = db[currentEventId];
-  const day = isEdit ? ev.days[idxOrNull] : { name: '', date: '', starttime: '', endtime: '', games: [] };
-  const html = `
-    <div class="form-group"><label>Day Name (e.g. Day 1)</label><input type="text" id="f-day-name" value="${day.name}"></div>
-    <div class="form-group"><label>Date (e.g. May 4, 2026)</label><input type="text" id="f-day-date" value="${day.date}"></div>
-    <div class="form-group"><label>Start Time</label><input type="text" id="f-day-start" value="${day.starttime}"></div>
-    <div class="form-group"><label>End Time</label><input type="text" id="f-day-end" value="${day.endtime}"></div>
-  `;
-  openModal(isEdit ? 'EDIT DAY' : 'NEW DAY', html, () => {
-    const newDay = {
-      name: document.getElementById('f-day-name').value,
-      date: document.getElementById('f-day-date').value,
-      starttime: document.getElementById('f-day-start').value,
-      endtime: document.getElementById('f-day-end').value,
-      games: isEdit ? day.games : []
-    };
-    if (isEdit) ev.days[idxOrNull] = newDay;
-    else { ev.days.push(newDay); currentDayIdx = ev.days.length - 1; }
-    closeModal();
-    refreshUI();
-  });
-}
-
-// Game Editor
-function openGameEditor(idx = -1) {
-  const isEdit = idx >= 0;
-  const day = db[currentEventId].days[currentDayIdx];
-  const game = isEdit ? day.games[idx] : { 
-    name: '', modifier: '', time: '', delegates: [], isBreak: false, 
-    scores: false, scorestype: 'versus', mid: '', scoring: [] 
-  };
-
-  const html = `
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-      <div class="form-group"><label>Game Name</label><input type="text" id="f-g-name" value="${game.name}"></div>
-      <div class="form-group"><label>Time (e.g. 9:00AM)</label><input type="text" id="f-g-time" value="${game.time}"></div>
-    </div>
-    <div class="form-group"><label>Modifier (e.g. junior, senior)</label><input type="text" id="f-g-mod" value="${game.modifier || ''}"></div>
-    <div class="form-group"><label>Delegates (comma separated)</label><input type="text" id="f-g-del" value="${(game.delegates||[]).join(', ')}"></div>
-    
-    <div style="display:flex; gap: 16px; margin: 16px 0;">
-      <label style="display:flex; align-items:center; gap:6px; font-weight:800; cursor:pointer;">
-        <input type="checkbox" id="f-g-break" ${game.isBreak ? 'checked' : ''}> IS BREAK
-      </label>
-      <label style="display:flex; align-items:center; gap:6px; font-weight:800; cursor:pointer;">
-        <input type="checkbox" id="f-g-scores" ${game.scores ? 'checked' : ''}> HAS SCORES
-      </label>
-    </div>
-
-    <div id="score-config-panel" style="display: ${game.scores ? 'block' : 'none'}; border: 2px dashed var(--border); padding: 12px; border-radius: 6px;">
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-        <div class="form-group"><label>Match ID (MID)</label><input type="text" id="f-g-mid" value="${game.mid || ''}"></div>
-        <div class="form-group"><label>Score Type</label>
-          <select id="f-g-type">
-            <option value="versus" ${game.scorestype==='versus'?'selected':''}>Versus</option>
-            <option value="roundrobin" ${game.scorestype==='roundrobin'?'selected':''}>Round Robin</option>
-          </select>
-        </div>
-      </div>
-      <div id="versus-teams-panel" style="display: ${game.scorestype==='versus' ? 'block' : 'none'}; margin-top: 10px;">
-        <label style="font-weight:800; font-size:0.8rem; color:var(--gray); margin-bottom:6px; display:block;">VERSUS MATCHUPS</label>
-        <div id="matchups-container"></div>
-        <button class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px; margin-top:6px;" id="btn-add-matchup">+ ADD ROW</button>
-      </div>
-    </div>
-  `;
-
-  openModal(isEdit ? 'EDIT GAME' : 'NEW GAME', html, () => {
-    const newGame = {
-      name: document.getElementById('f-g-name').value,
-      time: document.getElementById('f-g-time').value,
-      modifier: document.getElementById('f-g-mod').value,
-      delegates: document.getElementById('f-g-del').value.split(',').map(s=>s.trim()).filter(s=>s),
-      isBreak: document.getElementById('f-g-break').checked,
-      scores: document.getElementById('f-g-scores').checked,
-      scorestype: document.getElementById('f-g-type').value,
-      mid: document.getElementById('f-g-mid').value,
-      scoring: []
-    };
-
-    if (newGame.scores && newGame.scorestype === 'versus') {
-      const rows = document.querySelectorAll('.matchup-editor-row');
-      rows.forEach(row => {
-        const tA = row.children[0].value;
-        const tB = row.children[2].value;
-        if (tA || tB) newGame.scoring.push({ teamA: tA, scoreA: 0, teamB: tB, scoreB: 0 });
-      });
-      // Keep existing scores if editing and teams match
-      if (isEdit && game.scoring) {
-        newGame.scoring.forEach((newM, i) => {
-          if (game.scoring[i]) {
-            newM.scoreA = game.scoring[i].scoreA;
-            newM.scoreB = game.scoring[i].scoreB;
-          }
-        });
-      }
-    }
-
-    if (isEdit) day.games[idx] = newGame;
-    else day.games.push(newGame);
-    
-    closeModal();
-    refreshUI();
-  });
-
-  // Dynamic logic within the modal
-  const breakCb = document.getElementById('f-g-break');
-  const scoresCb = document.getElementById('f-g-scores');
-  const scorePanel = document.getElementById('score-config-panel');
-  const typeSel = document.getElementById('f-g-type');
-  const vsPanel = document.getElementById('versus-teams-panel');
-  const matchContainer = document.getElementById('matchups-container');
-  const addMatchBtn = document.getElementById('btn-add-matchup');
-
-  scoresCb.onchange = () => scorePanel.style.display = scoresCb.checked ? 'block' : 'none';
-  typeSel.onchange = () => vsPanel.style.display = typeSel.value === 'versus' ? 'block' : 'none';
-
-  function createMatchRow(tA = '', tB = '') {
-    const div = document.createElement('div');
-    div.className = 'matchup-editor-row';
-    div.innerHTML = `
-      <input type="text" placeholder="Team A" value="${tA}">
-      <span style="font-weight:900;font-style:italic;color:var(--gray)">VS</span>
-      <input type="text" placeholder="Team B" value="${tB}">
-      <button class="btn btn-danger" style="padding:4px 8px" onclick="this.parentElement.remove()">X</button>
-    `;
-    matchContainer.appendChild(div);
-  }
-
-  if (game.scoring && game.scoring.length > 0) {
-    game.scoring.forEach(m => createMatchRow(m.teamA, m.teamB));
+  // Tags
+  var tagWrap = el('span');
+  tagWrap.style.display = 'flex'; tagWrap.style.gap = '4px';
+  if (game.isBreak) {
+    tagWrap.appendChild(tag('brk','BRK'));
   } else {
-    createMatchRow(); // one default row
+    if (game.modifier) tagWrap.appendChild(tag(game.modifier.toLowerCase(), game.modifier.toUpperCase()));
+    if (game.scores) {
+      tagWrap.appendChild(tag(game.scorestype === 'roundrobin' ? 'rrobin' : 'versus',
+        game.scorestype === 'roundrobin' ? 'RR' : 'VS'));
+    }
+    if (game.mid) tagWrap.appendChild(tag('mid', 'MID ' + game.mid));
   }
 
-  addMatchBtn.onclick = () => createMatchRow();
+  // Order buttons + delete
+  var upBtn = iconBtn('↑','arrow', function(e) { e.stopPropagation(); swapGames(day, gi, gi-1); });
+  var dnBtn = iconBtn('↓','arrow', function(e) { e.stopPropagation(); swapGames(day, gi, gi+1); });
+  var delBtn = iconBtn('✕','del',  function(e) {
+    e.stopPropagation();
+    if (!confirm('Delete "' + (game.name||'game') + '"?')) return;
+    day.games.splice(gi, 1);
+    markDirty(); renderDay();
+  });
+
+  var chev = el('span', 'card-chevron');
+  chev.textContent = '▼';
+
+  bar.appendChild(titleSpan);
+  bar.appendChild(timeSpan);
+  bar.appendChild(tagWrap);
+  bar.appendChild(upBtn);
+  bar.appendChild(dnBtn);
+  bar.appendChild(delBtn);
+  bar.appendChild(chev);
+
+  // ── Body ──
+  var body = el('div', 'card-body');
+
+  // Toggle expand
+  bar.addEventListener('click', function(e) {
+    if (e.target.closest('.icon-btn')) return;
+    body.classList.toggle('open');
+    chev.classList.toggle('open');
+  });
+
+  // ── Row 1: name, time, modifier ──
+  var row1 = el('div', 'form-row');
+
+  var gName = formGroup('Game Name');
+  var inpName = fieldInput(game.name || '', 'text', true);
+  inpName.placeholder = 'Basketball';
+  inpName.addEventListener('input', function() {
+    game.name = inpName.value;
+    titleSpan.textContent = up(inpName.value);
+    markDirty();
+  });
+  gName.appendChild(inpName); row1.appendChild(gName);
+
+  var gTime = formGroup('Time');
+  var inpTime = fieldInput(game.time || '', 'text');
+  inpTime.placeholder = '9:00AM';
+  inpTime.addEventListener('input', function() {
+    game.time = inpTime.value;
+    timeSpan.textContent = inpTime.value;
+    markDirty();
+  });
+  gTime.appendChild(inpTime); row1.appendChild(gTime);
+
+  if (!game.isBreak) {
+    var gMod = formGroup('Modifier');
+    var selMod = document.createElement('select');
+    selMod.className = 'field-input';
+    [['','None'],['junior','Junior'],['senior','Senior']].forEach(function(o) {
+      var opt = document.createElement('option');
+      opt.value = o[0]; opt.textContent = o[1];
+      if (game.modifier === o[0]) opt.selected = true;
+      selMod.appendChild(opt);
+    });
+    selMod.addEventListener('change', function() {
+      game.modifier = selMod.value;
+      refreshTags(tagWrap, game);
+      markDirty();
+    });
+    gMod.appendChild(selMod); row1.appendChild(gMod);
+  }
+
+  body.appendChild(row1);
+
+  // ── Is Break toggle ──
+  var tRow = el('div', 'toggle-row');
+  var breakWrap = toggleWrap('Break / Filler', game.isBreak, function(v) {
+    game.isBreak = v;
+    card.classList.toggle('is-break', v);
+    bar.classList.toggle('is-break', v);
+    refreshTags(tagWrap, game);
+    markDirty();
+    // Re-render this card for full accuracy
+    var fresh = buildGameCard(day, game, gi);
+    card.replaceWith(fresh);
+  });
+  tRow.appendChild(breakWrap);
+
+  if (!game.isBreak) {
+    // Scores toggle
+    var scoresWrap = toggleWrap('Scores', !!game.scores, function(v) {
+      game.scores = v;
+      refreshTags(tagWrap, game);
+      markDirty();
+      // Re-render
+      var fresh = buildGameCard(day, game, gi);
+      card.replaceWith(fresh);
+    });
+    tRow.appendChild(scoresWrap);
+  }
+
+  body.appendChild(tRow);
+
+  if (!game.isBreak) {
+    // ── Delegates ──
+    var gDel = formGroup('Delegates');
+    body.appendChild(gDel);
+    gDel.appendChild(buildDelegatesInput(game));
+
+    // ── MID ──
+    if (game.scores) {
+      var row2 = el('div', 'form-row');
+      var gMid = formGroup('Match ID (MID)');
+      var inpMid = fieldInput(game.mid || '', 'text');
+      inpMid.placeholder = '001';
+      inpMid.addEventListener('input', function() {
+        game.mid = inpMid.value;
+        refreshTags(tagWrap, game);
+        markDirty();
+      });
+      gMid.appendChild(inpMid); row2.appendChild(gMid);
+      body.appendChild(row2);
+
+      // ── Score type ──
+      var gST = formGroup('Score Type');
+      var stPicker = el('div', 'scoretype-picker');
+      ['versus','roundrobin'].forEach(function(t) {
+        var opt = el('div', 'scoretype-opt' + (game.scorestype === t ? ' active' : ''));
+        opt.textContent = t === 'versus' ? 'Versus' : 'Round Robin';
+        opt.addEventListener('click', function() {
+          game.scorestype = t;
+          stPicker.querySelectorAll('.scoretype-opt').forEach(function(o) { o.classList.remove('active'); });
+          opt.classList.add('active');
+          refreshTags(tagWrap, game);
+          markDirty();
+          // Re-render scoring section
+          var fresh = buildGameCard(day, game, gi);
+          card.replaceWith(fresh);
+          // Re-open body
+          var freshBody = fresh.querySelector('.card-body');
+          var freshChev = fresh.querySelector('.card-chevron');
+          if (freshBody) freshBody.classList.add('open');
+          if (freshChev) freshChev.classList.add('open');
+        });
+        stPicker.appendChild(opt);
+      });
+      gST.appendChild(stPicker);
+      body.appendChild(gST);
+
+      // ── Scoring rows (versus only) ──
+      if (game.scorestype === 'versus') {
+        body.appendChild(buildScoringEditor(game, tagWrap));
+      } else {
+        body.appendChild(buildRREditor(game, tagWrap));
+      }
+    }
+  }
+
+  card.appendChild(bar);
+  card.appendChild(body);
+  return card;
 }
 
-// ── Boot ──
+// ══════════════════════════════════════════════════════
+//  SCORING EDITOR (versus rows)
+// ══════════════════════════════════════════════════════
+function buildScoringEditor(game, tagWrap) {
+  var wrap = el('div');
+  var lbl  = el('div', 'field-label');
+  lbl.textContent = 'Scoring Rows (Houses / Teams)';
+  wrap.appendChild(lbl);
+
+  var table = el('div', 'scoring-table');
+  if (!game.scoring) game.scoring = [];
+
+  function renderRows() {
+    table.innerHTML = '';
+    game.scoring.forEach(function(row, ri) {
+      var sRow = el('div', 'scoring-row');
+
+      var num = el('div', 'sr-num');
+      num.textContent = ri + 1;
+
+      // Team A
+      var inpA = document.createElement('input');
+      inpA.className = 'sr-input';
+      inpA.value = row.teamA || '';
+      inpA.placeholder = 'BLUE';
+      inpA.addEventListener('input', function() { row.teamA = inpA.value; markDirty(); });
+
+      var scoreA = document.createElement('input');
+      scoreA.className = 'sr-input sr-score';
+      scoreA.type = 'number'; scoreA.min = 0;
+      scoreA.value = row.scoreA != null ? row.scoreA : 0;
+      scoreA.addEventListener('input', function() { row.scoreA = parseInt(scoreA.value,10)||0; markDirty(); });
+
+      var vs = el('div', 'sr-vs');
+      vs.textContent = 'VS';
+
+      var scoreB = document.createElement('input');
+      scoreB.className = 'sr-input sr-score';
+      scoreB.type = 'number'; scoreB.min = 0;
+      scoreB.value = row.scoreB != null ? row.scoreB : 0;
+      scoreB.addEventListener('input', function() { row.scoreB = parseInt(scoreB.value,10)||0; markDirty(); });
+
+      var inpB = document.createElement('input');
+      inpB.className = 'sr-input';
+      inpB.value = row.teamB || '';
+      inpB.placeholder = 'GREEN';
+      inpB.addEventListener('input', function() { row.teamB = inpB.value; markDirty(); });
+
+      var delR = iconBtn('✕', 'del', function() {
+        game.scoring.splice(ri, 1);
+        markDirty(); renderRows();
+      });
+
+      sRow.appendChild(num);
+      sRow.appendChild(inpA);
+      sRow.appendChild(scoreA);
+      sRow.appendChild(vs);
+      sRow.appendChild(scoreB);
+      sRow.appendChild(inpB);
+      sRow.appendChild(delR);
+      table.appendChild(sRow);
+    });
+
+    var addR = el('button', 'scoring-add');
+    addR.textContent = '+ Add House / Team Row';
+    addR.addEventListener('click', function() {
+      game.scoring.push({ teamA:'', scoreA:0, teamB:'', scoreB:0 });
+      markDirty(); renderRows();
+    });
+    table.appendChild(addR);
+  }
+
+  renderRows();
+  wrap.appendChild(table);
+  return wrap;
+}
+
+// ══════════════════════════════════════════════════════
+//  DELEGATES INPUT (tag style)
+// ══════════════════════════════════════════════════════
+function buildDelegatesInput(game) {
+  if (!game.delegates) game.delegates = [];
+
+  var wrap = el('div', 'delegates-wrap');
+
+  function refreshTags() {
+    wrap.querySelectorAll('.delegate-tag').forEach(function(t) { t.remove(); });
+    var inp = wrap.querySelector('.delegate-input');
+    game.delegates.forEach(function(name, di) {
+      var t = el('div', 'delegate-tag');
+      t.innerHTML = '';
+      var span = document.createElement('span');
+      span.textContent = name;
+      var btn = document.createElement('button');
+      btn.textContent = '×';
+      btn.title = 'Remove';
+      btn.addEventListener('click', function() {
+        game.delegates.splice(di, 1);
+        markDirty(); refreshTags();
+      });
+      t.appendChild(span);
+      t.appendChild(btn);
+      wrap.insertBefore(t, inp);
+    });
+  }
+
+  var inp = el('input', 'delegate-input');
+  inp.placeholder = 'Type name, press Enter…';
+  inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      var v = inp.value.trim().replace(/,$/, '');
+      if (v) {
+        game.delegates.push(v);
+        inp.value = '';
+        markDirty(); refreshTags();
+      }
+    } else if (e.key === 'Backspace' && inp.value === '' && game.delegates.length) {
+      game.delegates.pop();
+      markDirty(); refreshTags();
+    }
+  });
+  inp.addEventListener('blur', function() {
+    var v = inp.value.trim().replace(/,$/, '');
+    if (v) { game.delegates.push(v); inp.value = ''; markDirty(); refreshTags(); }
+  });
+
+  wrap.appendChild(inp);
+  refreshTags();
+  wrap.addEventListener('click', function() { inp.focus(); });
+  return wrap;
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+function el(tag, cls) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  return e;
+}
+
+function up(s) { return (s||'').toUpperCase(); }
+
+function baseLabel(b) {
+  return b === 'grade' ? 'GRADE BASED' : 'HOUSE BASED';
+}
+
+function formGroup(label) {
+  var g = el('div', 'form-group');
+  var l = el('div', 'field-label');
+  l.textContent = label;
+  g.appendChild(l);
+  return g;
+}
+
+function fieldInput(val, type, isBig) {
+  var inp = document.createElement('input');
+  inp.className = 'field-input' + (isBig ? ' title-input' : '');
+  inp.type = type || 'text';
+  inp.value = val || '';
+  return inp;
+}
+
+function iconBtn(symbol, extraCls, fn) {
+  var b = el('button', 'icon-btn ' + (extraCls||''));
+  b.textContent = symbol;
+  b.addEventListener('click', fn);
+  return b;
+}
+
+function tag(cls, text) {
+  var t = el('span', 'ctag ' + cls);
+  t.textContent = text;
+  return t;
+}
+
+function toggleWrap(label, initialOn, onChange) {
+  var wrap = el('div', 'toggle-wrap');
+  var toggle = el('button', 'toggle' + (initialOn ? ' on' : ''));
+  toggle.type = 'button';
+  var lbl = el('span', 'toggle-text');
+  lbl.textContent = label;
+  toggle.addEventListener('click', function() {
+    var nowOn = !toggle.classList.contains('on');
+    toggle.classList.toggle('on', nowOn);
+    onChange(nowOn);
+  });
+  wrap.appendChild(toggle);
+  wrap.appendChild(lbl);
+  return wrap;
+}
+
+function swapGames(day, a, b) {
+  var arr = day.games;
+  if (b < 0 || b >= arr.length) return;
+  var tmp = arr[a]; arr[a] = arr[b]; arr[b] = tmp;
+  markDirty(); renderDay();
+}
+
+function refreshTags(tagWrap, game) {
+  tagWrap.innerHTML = '';
+  if (game.isBreak) {
+    tagWrap.appendChild(tag('brk','BRK'));
+  } else {
+    if (game.modifier) tagWrap.appendChild(tag(game.modifier.toLowerCase(), game.modifier.toUpperCase()));
+    if (game.scores) {
+      tagWrap.appendChild(tag(game.scorestype === 'roundrobin' ? 'rrobin' : 'versus',
+        game.scorestype === 'roundrobin' ? 'RR' : 'VS'));
+    }
+    if (game.mid) tagWrap.appendChild(tag('mid', 'MID ' + game.mid));
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  ROUND ROBIN EDITOR
+//  scoring = [{teamA, scoreA, teamB, scoreB}, ...]
+//  Same shape as versus. null scores = pending/not played yet.
+// ══════════════════════════════════════════════════════
+function buildRREditor(game, tagWrap) {
+  var wrap = el('div');
+
+  if (!Array.isArray(game.scoring)) game.scoring = [];
+
+  // ── Auto-generate helper ──
+  var genWrap = el('div');
+  genWrap.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;';
+
+  var genInput = document.createElement('input');
+  genInput.className = 'field-input';
+  genInput.style.flex = '1';
+  genInput.style.minWidth = '160px';
+  genInput.placeholder = 'GREEN, BLUE, RED, BLACK';
+  genInput.title = 'Comma-separated house names — generates all pairings';
+
+  var genBtn = el('button', 'add-btn');
+  genBtn.style.cssText = 'white-space:nowrap;flex-shrink:0;border-color:var(--accent);color:var(--accent);';
+  genBtn.textContent = '⚡ Generate all pairings';
+  genBtn.addEventListener('click', function() {
+    var names = genInput.value.split(',').map(function(s) { return s.trim().toUpperCase(); }).filter(Boolean);
+    if (names.length < 2) return;
+    var pairs = [];
+    for (var i = 0; i < names.length; i++) {
+      for (var j = i + 1; j < names.length; j++) {
+        pairs.push({ teamA: names[i], scoreA: null, teamB: names[j], scoreB: null });
+      }
+    }
+    game.scoring = pairs;
+    markDirty(); renderRows();
+  });
+
+  var genNote = el('div');
+  genNote.style.cssText = 'font-size:.7rem;color:var(--text3);width:100%;margin-top:-4px;';
+  genNote.textContent = '4 houses → 6 matchups auto-generated. Leave scores blank for unplayed matches.';
+
+  genWrap.appendChild(genInput);
+  genWrap.appendChild(genBtn);
+  genWrap.appendChild(genNote);
+  wrap.appendChild(genWrap);
+
+  var lbl = el('div', 'field-label');
+  lbl.textContent = 'Matchups';
+  wrap.appendChild(lbl);
+
+  var table = el('div', 'scoring-table');
+
+  function renderRows() {
+    table.innerHTML = '';
+    game.scoring.forEach(function(match, ri) {
+      var sRow = el('div', 'scoring-row');
+
+      var num = el('div', 'sr-num');
+      num.textContent = ri + 1;
+
+      var inpA = document.createElement('input');
+      inpA.className = 'sr-input';
+      inpA.value = match.teamA || '';
+      inpA.placeholder = 'GREEN';
+      inpA.addEventListener('input', function() { match.teamA = inpA.value.toUpperCase(); markDirty(); });
+
+      var scoreA = document.createElement('input');
+      scoreA.className = 'sr-input sr-score';
+      scoreA.type = 'number'; scoreA.min = 0;
+      scoreA.value = match.scoreA != null ? match.scoreA : '';
+      scoreA.placeholder = '—';
+      scoreA.addEventListener('input', function() {
+        match.scoreA = scoreA.value !== '' ? parseInt(scoreA.value, 10) : null;
+        markDirty();
+      });
+
+      var colon = el('div', 'sr-vs');
+      colon.textContent = ':';
+
+      var scoreB = document.createElement('input');
+      scoreB.className = 'sr-input sr-score';
+      scoreB.type = 'number'; scoreB.min = 0;
+      scoreB.value = match.scoreB != null ? match.scoreB : '';
+      scoreB.placeholder = '—';
+      scoreB.addEventListener('input', function() {
+        match.scoreB = scoreB.value !== '' ? parseInt(scoreB.value, 10) : null;
+        markDirty();
+      });
+
+      var inpB = document.createElement('input');
+      inpB.className = 'sr-input';
+      inpB.value = match.teamB || '';
+      inpB.placeholder = 'BLUE';
+      inpB.style.textAlign = 'right';
+      inpB.addEventListener('input', function() { match.teamB = inpB.value.toUpperCase(); markDirty(); });
+
+      var delR = iconBtn('✕', 'del', function() {
+        game.scoring.splice(ri, 1);
+        markDirty(); renderRows();
+      });
+
+      sRow.appendChild(num);
+      sRow.appendChild(inpA);
+      sRow.appendChild(scoreA);
+      sRow.appendChild(colon);
+      sRow.appendChild(scoreB);
+      sRow.appendChild(inpB);
+      sRow.appendChild(delR);
+      table.appendChild(sRow);
+    });
+
+    var addR = el('button', 'scoring-add');
+    addR.textContent = '+ Add Matchup';
+    addR.addEventListener('click', function() {
+      game.scoring.push({ teamA: '', scoreA: null, teamB: '', scoreB: null });
+      markDirty(); renderRows();
+    });
+    table.appendChild(addR);
+  }
+
+  renderRows();
+  wrap.appendChild(table);
+  return wrap;
+}
+
+// ══════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════
 loadData();
 connectWS();
-
 </script>
 </body>
 </html>
